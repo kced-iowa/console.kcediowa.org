@@ -6,6 +6,7 @@
   height: 100vh;
 }
 .titleContainer {
+  color: #04c2e4;
   position: absolute;
   top: 20%;
   font-size: 40px;

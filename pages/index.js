@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-
-import { FiUser, FiLock } from 'react-icons/fi'
+import Head from 'next/head';
+import Link from 'next/link';
+import styles from '../styles/Home.module.css';
+import { FiUser, FiLock } from 'react-icons/fi';
 
 
 function Home() {
@@ -40,7 +40,13 @@ function Home() {
               </form>
             </div>
           </div>
-          <div className={styles.loginButton} onClick={loginHandler}><span>Login</span></div>
+          <Link href="/dashboard">
+            <div className={styles.loginButton}>
+              <a>
+                <span>Login</span>
+              </a>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
