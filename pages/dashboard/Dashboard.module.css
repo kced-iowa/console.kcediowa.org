@@ -5,6 +5,7 @@
     height: 50px;
     background-color: #04c2e4;
     padding-left: 10px;
+    font-size: 20px;
 }
 .account {
     position: absolute;
@@ -13,8 +14,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
 }
 .space {
     padding-right: 5px;
+}
+.button {
+    padding: 0 5px;
+    text-decoration: none;
 }
