@@ -1,0 +1,28 @@
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: #04c2e4;
+    padding-left: 10px;
+    font-size: 20px;
+}
+.navbar a {
+    text-decoration: none;
+    color: #000;
+}
+.account {
+    position: absolute;
+    right: 10px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.space {
+    padding-right: 5px;
+}
+.button {
+    padding: 0 5px;
+    text-decoration: none;
+}

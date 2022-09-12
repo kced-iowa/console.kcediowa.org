@@ -1,0 +1,59 @@
+.page {
+    padding-left: 5rem;
+    padding-top: 3rem;
+}
+.title {
+    font-size: 60px;
+    color: #c7dde8;
+    padding-bottom: 3rem;
+}
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+.memberCard {
+    position: relative;
+    margin: 20px;
+    padding: 10px;
+    height: 300px;
+    width: 500px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+.imageContainer {
+    display: flex;
+}
+.bar {
+    height: 100px;
+    width: 6px;
+    margin-right: 6px;
+    background-color: #c7dde8; 
+}
+.cardImage {
+    position: relative;
+    height: 100px;
+    width: 100px;
+}
+.cardButtons {
+    display: flex;
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+}
+.delete,
+.update {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85px;
+    height: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.delete {
+    background-color: #bd0f0f;
+    margin-right: 10px;
+}
+.update {
+    background-color: #7ed6e6;
+}

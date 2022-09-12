@@ -20,7 +20,7 @@ function Home() {
           <span>Welcome to the SADC Console.</span>
         </div>
         <div className={styles.loginContainer}>
-          <div className={styles.login}>
+          {/* <div className={styles.login}>
             <div className={styles.icon}>
               <FiUser />
             </div>
@@ -39,7 +39,7 @@ function Home() {
                 <input type="password" className={styles.passwordForm} placeholder="Password" />
               </form>
             </div>
-          </div>
+          </div> */}
           <Link href="/dashboard">
             <div className={styles.loginButton}>
               <a>
