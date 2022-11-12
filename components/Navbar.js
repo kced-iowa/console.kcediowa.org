@@ -13,16 +13,24 @@ const buttons = [
         link: "members"
     },
     {
-        title: "Companies",
-        link: "companies"
+        title: "Businesses",
+        link: "businesses"
     },
     {
-        title: "Orgsanizations",
+        title: "Events",
+        link: "events"
+    },
+    {
+        title: "News",
+        link: "news"
+    },
+    {
+        title: "Clubs & Organizations",
         link: "orgs"
     },
     {
-        title: "Locations",
-        link: "locations"
+        title: "Visit",
+        link: "visit"
     }
 ];
 
@@ -30,7 +38,7 @@ function Navbar(){
     return (
         <div className={styles.navbar}>
                 {buttons.map(({title, link}) => (
-                    <Link href={'/' + link} key="" >
+                    <Link href={'/' + link} key={title} >
                         <a>
                             <div className={styles.button}>
                                 <span>{title}</span>

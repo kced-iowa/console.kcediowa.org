@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import React from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Navbar from '../../components/Navbar'
 import axios from 'axios'
 import styles from './Members.module.css'
+
+import { TbSelect } from 'react-icons/tb';
 
 const deleteHandler = () => {
     alert('delete')
@@ -11,12 +14,41 @@ const deleteHandler = () => {
 const updateHander = () => {
     alert('update')
 }
-const submitHandler = () => {}
+
+const members = [
+    {
+        name: "david"
+    },
+    {
+        name: "person0"
+    },
+    {
+        name: "person1"
+    },
+    {
+        name: "person2"
+    }
+]
 
 function Members() {
-    const [state, useState] = React.useState({
-        balls: "test" 
-    })
+    const [name, setName] = useState("name");
+    const [occupation, setOccupation] = useState("occupation");
+    const [paragrah, setParagraph] = useState("paaaaaa supser cuool paragraph\ni amsupergungry");
+    const handleName = ({target:{value}}) => setName(value);
+    const handleOccupation = ({target:{value}}) => setOccupation(value);
+    const handleParagraph = ({target:{value}}) => setParagraph(value);
+    const submitHandle = async (event) => {
+        event.preventDefault();
+        console.log(occupation)
+        console.log(paragrah)
+        axios
+        .post("http://localhost:5000/members", {
+            id: 17,
+            name: name
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
     return (
         <div>
             <Head>
@@ -27,7 +59,17 @@ function Members() {
                 <div className={styles.title}>
                     <span>Members</span>
                 </div>
-                <div className={styles.cardContainer}>
+                <div className={styles.container}>
+                    <div className={styles.memberList}>
+                        {members.map(({name}) => (
+                            <div className={styles.member} key={name}>
+                                <span>{name}</span>
+                                <div className={styles.memberSelect}>
+                                    <TbSelect />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                     <div className={styles.memberCard}>
                         <div className={styles.imageContainer}>
                             <div className={styles.bar} />
@@ -36,8 +78,13 @@ function Members() {
                             </div>
                         </div>
                         <div className={styles.cardTitle}>
-                            <form>
-                            <input name="name" value={state.balls} />
+                            <form onSubmit={submitHandle}>
+                                <div>
+                                    <input name="name" value={name} onChange={handleName} />
+                                    <input name="" value={occupation} onChange={handleOccupation} />
+                                </div>
+                                <input name="paragraph" value={paragrah} onChange={handleParagraph} />
+                                <button type="submit">Test</button>
                             </form>
                         </div>
                         <div className={styles.cardButtons}>

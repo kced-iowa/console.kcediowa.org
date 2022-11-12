@@ -1,24 +1,46 @@
-.navbar {
-    position: relative;
+.container {
+    margin: 30px;
     display: flex;
-    align-items: center;
-    height: 50px;
-    background-color: #04c2e4;
-    padding-left: 10px;
-    font-size: 20px;
 }
-.account {
+.homeCard {
+    background-color: #fff;
+    padding: 10px;
+    margin: 10px;
+    height: 600px;
+    width: 400px;
+    border-radius: 10px;
+}
+.linkCard,
+.wikiCard {
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    height: 125px;
+    width: 200px;
+}
+.linkCard span,
+.wikiCard span,
+.homeTitle {
+    font-size: 25px;
+}
+.linkCard a,
+.wikiCard a {
     position: absolute;
-    right: 10px;
+    bottom: 10px;
+    border-radius: 10px;
     height: 50px;
+    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.space {
-    padding-right: 5px;
-}
-.button {
-    padding: 0 5px;
     text-decoration: none;
+    color: #fff;
+    background-color: black;
+}
+.linkCard a span,
+.wikiCard a span {
+    padding: 0 5px;
+    font-size: 16px;
 }

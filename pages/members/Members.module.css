@@ -7,21 +7,41 @@
     color: #c7dde8;
     padding-bottom: 3rem;
 }
-.cardContainer {
+.container {
     display: flex;
     flex-wrap: wrap;
 }
+.memberList {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    height: 600px;
+    width: 200px;
+    padding: 12px;
+    border-radius: 10px;
+}
+.member {
+    display: flex;
+    position: relative;
+    padding: 5px 0;
+}
+.memberSelect {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
 .memberCard {
     position: relative;
-    margin: 20px;
-    padding: 10px;
+    margin: 0 20px;
+    padding: 12px;
     height: 300px;
     width: 500px;
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: #fff;
 }
 .imageContainer {
     display: flex;
+    padding: 10px 0;
 }
 .bar {
     height: 100px;
