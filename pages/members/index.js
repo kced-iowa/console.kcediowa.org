@@ -6,31 +6,38 @@ import Navbar from '../../components/Navbar'
 import axios from 'axios'
 import styles from './Members.module.css'
 
-import { TbSelect } from 'react-icons/tb';
-
-const deleteHandler = () => {
-    alert('delete')
-}
-const updateHander = () => {
-    alert('update')
-}
-
-const members = [
-    {
-        name: "david"
-    },
-    {
-        name: "person0"
-    },
-    {
-        name: "person1"
-    },
-    {
-        name: "person2"
-    }
-]
+import { TbSelect } from 'react-icons/tb'
 
 function Members() {
+
+    const memberSelect = () => {
+        alert("test")
+    }
+    const handleNewMember = () => {
+        alert('add')
+    }
+    const deleteHandler = () => {
+        alert('delete')
+    }
+    const updateHander = () => {
+        alert('update')
+    }
+    
+    const members = [
+        {
+            name: "david"
+        },
+        {
+            name: "person0"
+        },
+        {
+            name: "person1"
+        },
+        {
+            name: "person2"
+        }
+    ]    
+
     const [name, setName] = useState("name");
     const [occupation, setOccupation] = useState("occupation");
     const [paragrah, setParagraph] = useState("paaaaaa supser cuool paragraph\ni amsupergungry");
@@ -64,20 +71,25 @@ function Members() {
                         {members.map(({name}) => (
                             <div className={styles.member} key={name}>
                                 <span>{name}</span>
-                                <div className={styles.memberSelect}>
+                                <div className={styles.memberSelect} onClick={memberSelect}>
                                     <TbSelect />
                                 </div>
                             </div>
                         ))}
+                        <div className={styles.addMember}>
+                            <button onClick={handleNewMember}>
+                                <span>Add Member</span>
+                            </button>
+                        </div>
                     </div>
                     <div className={styles.memberCard}>
-                        <div className={styles.imageContainer}>
+                        <div className={styles.titleContainer}>
                             <div className={styles.bar} />
                             <div className={styles.cardImage}>
                                 <Image alt="" src="" layout="fill"/>
                             </div>
                         </div>
-                        <div className={styles.cardTitle}>
+                        <div className={styles.cardForm}>
                             <form onSubmit={submitHandle}>
                                 <div>
                                     <input name="name" value={name} onChange={handleName} />
