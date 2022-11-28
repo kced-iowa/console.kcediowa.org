@@ -4,4 +4,14 @@ const nextConfig = {
   swcMinify: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/api/auth/login',
+        permanent: true,
+      },
+    ]
+  },
+}
