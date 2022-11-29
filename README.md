@@ -3,5 +3,5 @@
 - NextJS
 - Auth0
 ## Purpose
-## Setting up dev environment
+## Development
 For more in-depth documentation for this project and sigourney.com's sister projects, you can find the docs [here](https://wiki.sigourney.com)
