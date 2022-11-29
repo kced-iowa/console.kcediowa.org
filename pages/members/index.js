@@ -1,3 +1,4 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import Head from 'next/head'
 import React from 'react'
 import { useState } from 'react'
@@ -8,7 +9,7 @@ import styles from './Members.module.css'
 
 import { TbSelect } from 'react-icons/tb'
 
-function Members() {
+export default function Members() {
 
     const memberSelect = () => {
         alert("test")
@@ -110,4 +111,4 @@ function Members() {
     )
 }
 
-export default Members
+export const getServerSideProps = withPageAuthRequired();
