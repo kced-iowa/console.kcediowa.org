@@ -1,3 +1,5 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
@@ -5,8 +7,12 @@ import axios from 'axios';
 import styles from './Dashboard.module.css';
 
 import { BsBoxArrowUpRight } from 'react-icons/bs';
-
-function Dashboard() {
+    
+export default function Dashboard() {
+    const { user, error, isLoading } = useUser();
+    // i don't know why auth0 needs this, but it won't run without it...
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
     return (
         <div>
             <Head>
@@ -15,7 +21,7 @@ function Dashboard() {
             <Navbar />
             <div className={styles.container}>
                 <div className={styles.homeCard}>
-                    <span className={styles.homeTitle}>Welcome back,<br />HORSAEN.</span>
+                    <span className={styles.homeTitle}>Welcome back,<br />{user.username}.</span>
                 </div>
                 <div className={styles.linkCard}>
                     <span>Analytics</span>
@@ -36,4 +42,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export const getServerSideProps = withPageAuthRequired();

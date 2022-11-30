@@ -19,6 +19,14 @@
     justify-content: center;
     align-items: center;
 }
+.account span {
+    text-transform: uppercase;
+}
+.account a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 .space {
     padding-right: 5px;
 }

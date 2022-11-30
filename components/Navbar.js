@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import styles from './Navbar.module.css'
+import { useUser } from '@auth0/nextjs-auth0';
+import Link from 'next/link';
+import styles from './Navbar.module.css';
 import { CgProfile } from 'react-icons/cg';
 
 
@@ -34,7 +35,11 @@ const buttons = [
     }
 ];
 
-function Navbar(){
+export default function Navbar(){
+    const { user, error, isLoading } = useUser();
+    // i don't know why auth0 needs this, but it won't run without it...
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
     return (
         <div className={styles.navbar}>
                 {buttons.map(({title, link}) => (
@@ -47,11 +52,13 @@ function Navbar(){
                     </Link>
                 ))}
                 <div className={styles.account}>
-                    <CgProfile className={styles.space} />
-                    <span>HORSAEN</span>
+                    <Link href='/api/auth/logout'>
+                        <a>
+                            <CgProfile className={styles.space} />
+                            <span>{user.username}</span>
+                        </a>
+                    </Link>
                 </div>
             </div>
     )
 }
-
-export default Navbar
