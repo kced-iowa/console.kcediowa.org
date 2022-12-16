@@ -1,8 +1,8 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import Head from 'next/head'
-import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
 import Image from 'next/image'
+import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import axios from 'axios'
 import styles from './Members.module.css'
@@ -10,52 +10,19 @@ import styles from './Members.module.css'
 import { TbSelect } from 'react-icons/tb'
 
 export default function Members() {
-
-    const memberSelect = () => {
-        alert("test")
-    }
-    const handleNewMember = () => {
-        alert('add')
-    }
-    const deleteHandler = () => {
-        alert('delete')
-    }
-    const updateHander = () => {
-        alert('update')
-    }
-    
-    const members = [
-        {
-            name: "david"
-        },
-        {
-            name: "person0"
-        },
-        {
-            name: "person1"
-        },
-        {
-            name: "person2"
-        }
-    ]    
-
-    const [name, setName] = useState("name");
-    const [occupation, setOccupation] = useState("occupation");
-    const [paragrah, setParagraph] = useState("paaaaaa supser cuool paragraph\ni amsupergungry");
-    const handleName = ({target:{value}}) => setName(value);
-    const handleOccupation = ({target:{value}}) => setOccupation(value);
-    const handleParagraph = ({target:{value}}) => setParagraph(value);
-    const submitHandle = async (event) => {
-        event.preventDefault();
-        console.log(occupation)
-        console.log(paragrah)
+    const [members, setMembers] = useState([])
+    useEffect(() => {
+        fetchMembers()
+    }, [])
+    const fetchMembers = () => {
         axios
-        .post("http://localhost:5000/members", {
-            id: 17,
-            name: name
+        .get('http://localhost:5000/members')
+        .then((res) => {
+            setMembers(res.data)
         })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        .catch((err) => {
+            console.log(err)
+        })
     }
     return (
         <div>
@@ -67,43 +34,36 @@ export default function Members() {
                 <div className={styles.title}>
                     <span>Members</span>
                 </div>
-                <div className={styles.container}>
+                <div className={styles.memberContainer}>
                     <div className={styles.memberList}>
-                        {members.map(({name}) => (
-                            <div className={styles.member} key={name}>
-                                <span>{name}</span>
-                                <div className={styles.memberSelect} onClick={memberSelect}>
-                                    <TbSelect />
+                        {members.map((member) => (
+                            <div key={member._id} className={styles.member}>
+                                <p>{member.name}</p>
+                                <div>
+                                    <button className={styles.edit} onClick={
+                                        function editMember () {
+                                            var url = '/members/edit/' + member._id
+                                            window.location = url
+                                        }
+                                    }>Edit</button>
+                                    <button className={styles.delete} onClick={
+                                        function deleteMember () {
+                                                axios
+                                                .delete('http://localhost:5000/members/' + member._id)
+                                                .then(res => res.json())
+                                                .catch(err => console.log(err))
+                                                setTimeout(function () {window.location.reload()},250)
+                                        }
+                                    }>Delete</button>
                                 </div>
                             </div>
                         ))}
-                        <div className={styles.addMember}>
-                            <button onClick={handleNewMember}>
-                                <span>Add Member</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div className={styles.memberCard}>
-                        <div className={styles.titleContainer}>
-                            <div className={styles.bar} />
-                            <div className={styles.cardImage}>
-                                <Image alt="" src="" layout="fill"/>
-                            </div>
-                        </div>
-                        <div className={styles.cardForm}>
-                            <form onSubmit={submitHandle}>
-                                <div>
-                                    <input name="name" value={name} onChange={handleName} />
-                                    <input name="" value={occupation} onChange={handleOccupation} />
-                                </div>
-                                <input name="paragraph" value={paragrah} onChange={handleParagraph} />
-                                <button type="submit">Test</button>
-                            </form>
-                        </div>
-                        <div className={styles.cardButtons}>
-                            <div onClick={deleteHandler} className={styles.delete}>Delete</div>
-                            <div onClick={updateHander} className={styles.update}>Update</div>
-                        </div>
+                        <div className={styles.addMember} onClick={
+                            function addMember() {
+                                var url = '/members/add'
+                                window.location = url
+                            }
+                        }>Add Member</div>
                     </div>
                 </div>
             </div>

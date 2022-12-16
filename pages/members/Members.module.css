@@ -1,110 +1,55 @@
-.page {
-    padding-left: 5rem;
-    padding-top: 3rem;
-}
 .title {
     font-size: 60px;
     color: #c7dde8;
     padding-bottom: 3rem;
+    padding-left: 5rem;
+    padding-top: 3rem;
 }
-.container {
-    display: flex;
-    flex-wrap: wrap;
-}
-.memberList {
+.memberContainer {
+    position: relative;
+    width: 100vw;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    align-items: center;
+}
+.memberList {
     position: relative;
-    height: 600px;
-    width: 200px;
-    padding: 12px;
     border-radius: 10px;
+    background-color: #fff;
+    overflow: scroll;
+    scrollbar-width: none;
+    overflow-x: hidden;
+    height: 600px;
+    width: 1000px;
+    padding: 15px;
+}
+.memberList::-webkit-scrollbar {
+    display: none;
 }
 .member {
     display: flex;
+    align-items: center;
     position: relative;
-    padding: 5px 0;
+    height: 40px;
 }
-.memberSelect {
+.member div {
     position: absolute;
-    right: 10px;
-    cursor: pointer;
+    right: 0;
+}
+.member div button {
+    margin: 0 5px;
 }
 .addMember {
-    position: absolute;
-    left: 0;
+    cursor: pointer;
+    position: sticky;
     bottom: 0;
-    width: 100%;
-    height: 30px;
-    background-color: #000;
+    float: right;
+    background-color: black;
+    height: 60px;
+    width: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0 0 10px 10px;
-}
-.addMember button {
-    cursor: pointer;
-}
-.memberCard {
-    position: relative;
-    margin: 0 20px;
-    padding: 12px;
-    height: 300px;
-    width: 500px;
-    border-radius: 10px;
-    background-color: #fff;
-}
-.titleContainer {
-    display: flex;
-    padding: 10px 0;
-}
-.bar {
-    height: 100px;
-    width: 6px;
-    margin-right: 6px;
-    background-color: #c7dde8; 
-}
-.cardForm form input{
-    all: unset;
-    background-color: #c7dde8;
-    margin: 10px;
-    padding: 5px;
-    border-radius: 5px;
-}
-.cardForm form button {
-    all: unset;
-    background-color: #c7dde8;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.cardImage {
-    position: relative;
-    height: 100px;
-    width: 100px;
-}
-.cardButtons {
-    display: flex;
-    position: absolute;
-    right: 15px;
-    bottom: 10px;
-}
-.delete,
-.update {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 85px;
-    height: 30px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.delete {
-    background-color: #777373;
     color: #fff;
-    margin-right: 10px;
-}
-.update {
-    background-color: #36e981;
+    border-radius: 10px;
 }
