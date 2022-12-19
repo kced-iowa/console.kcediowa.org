@@ -1,4 +1,4 @@
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export default function Events(){
     return (
@@ -6,4 +6,4 @@ export default function Events(){
     );
 };
 
-export const getServerSideProps = withApiAuthRequired();
+export const getServerSideProps = withPageAuthRequired();

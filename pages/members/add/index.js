@@ -6,7 +6,8 @@ import Head from 'next/head';
 import axios from 'axios'
 import styles from './Add.module.css'
 
-export default function AddMember () {
+
+export default function AddMember (props) {
 
     const [name, setName] = useState('')
     const [occupation, setOccupation] = useState('')
@@ -26,13 +27,22 @@ export default function AddMember () {
         e.preventDefault();
         axios
         .post('http://localhost:5000/members', {
-            name: name,
-            occupation: occupation,
-            bio: paragraph,
-            join: date
+            // name: name,
+            // occupation: occupation,
+            // bio: paragraph,
+            // join: date
+            image: image
         })
         .then(res => console.log(res))
         .catch(err => console.log(err))
+        console.log(image)
+    }
+
+    const [image, setImage] = useState("")
+    const onImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+        setImage(URL.createObjectURL(event.target.files[0]));
+        }
     }
 
     return(
@@ -41,10 +51,11 @@ export default function AddMember () {
                 <title>Member | Add</title>
             </Head>
             <div className={styles.editMember}>
-                <form onSubmit={submitHandle}>
+                <form onSubmit={submitHandle} encType="multipart/form-data">
                     <div className={styles.title}>
                         <div className={styles.bar}/>
-                        <div className={styles.image}><Image alt='' layout='fill'/></div>
+                        <div className={styles.image}><Image alt='' src={image} layout='fill'/></div>
+                        <input type="file" onChange={onImageChange}></input>
                     </div>
                     <div className={styles.inputs}>
                         <div>
