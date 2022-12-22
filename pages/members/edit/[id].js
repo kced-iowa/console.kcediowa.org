@@ -7,15 +7,16 @@ import axios from 'axios'
 import styles from './Edit.module.css'
 
 
-export default function AddMember (props) {
+export default function AddMember () {
 
-    const [name, setName] = useState('')
+    const [name, setName] = useState([])
     const [occupation, setOccupation] = useState('')
     const [paragraph, setParagraph] = useState('')
     const [date, setDate] = useState('')
 
     const router = useRouter()
-    const { id } = router.query
+    const { id }= router.query
+
     useEffect(() => {
         const fetchAbout = () => {
             axios
@@ -24,17 +25,15 @@ export default function AddMember (props) {
                 setName(res.data.name)
                 setOccupation(res.data.occupation)
                 setParagraph(res.data.bio)
+                setDate(res.data.join)
             })
             .catch((err) =>{
                 console.log(err)
             })
         }
         fetchAbout()
+        
     }, [id])
-
-    const submitHandle = () => {
-        alert('works')
-    }
 
     const handleName = ({target:{value}}) => setName(value)
     const handleOccupation = ({target:{value}}) => setOccupation(value)
@@ -52,10 +51,24 @@ export default function AddMember (props) {
         }
     }
 
+    const submitHandle = (e) => {
+        e.preventDefault();
+        axios
+        .patch('http://localhost:5000/members/' + id, {
+            name: name,
+            occupation: occupation,
+            bio: paragraph,
+            join: date
+        })
+        .then((res) => {
+            console.log(res)
+        })
+    }
+
     return(
         <div className={styles.container}>
             <Head>
-                <title>Member | Add</title>
+                <title>Member | Edit</title>
             </Head>
             <div className={styles.editMember}>
                 <form onSubmit={submitHandle} encType="multipart/form-data">
