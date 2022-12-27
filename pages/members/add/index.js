@@ -26,16 +26,18 @@ export default function AddMember (props) {
     const submitHandle = async (e) => {
         e.preventDefault();
         axios
-        .post('http://localhost:5000/members', {
-            // name: name,
-            // occupation: occupation,
-            // bio: paragraph,
-            // join: date
-            image: image
+        .post('https://api.horsaen.com/members', {
+            name: name,
+            occupation: occupation,
+            bio: paragraph,
+            join: date
+            // image: image
         })
         .then(res => console.log(res))
         .catch(err => console.log(err))
         console.log(image)
+        alert('member successfully added')
+        cancelHandler()
     }
 
     const [image, setImage] = useState("")

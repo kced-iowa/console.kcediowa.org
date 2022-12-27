@@ -6,7 +6,6 @@ import Head from 'next/head';
 import axios from 'axios'
 import styles from './Edit.module.css'
 
-
 export default function AddMember () {
 
     const [name, setName] = useState([])
@@ -20,7 +19,7 @@ export default function AddMember () {
     useEffect(() => {
         const fetchAbout = () => {
             axios
-            .get('http://localhost:5000/members/' + id)
+            .get('https://api.horsaen.com/members/' + id)
             .then((res) => {
                 setName(res.data.name)
                 setOccupation(res.data.occupation)
@@ -54,7 +53,7 @@ export default function AddMember () {
     const submitHandle = (e) => {
         e.preventDefault();
         axios
-        .patch('http://localhost:5000/members/' + id, {
+        .patch('https://api.horsaen.com/members/' + id, {
             name: name,
             occupation: occupation,
             bio: paragraph,
@@ -63,6 +62,8 @@ export default function AddMember () {
         .then((res) => {
             console.log(res)
         })
+        alert('Member successfully updated.')
+        window.location = '/members'
     }
 
     return(

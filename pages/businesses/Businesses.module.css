@@ -5,14 +5,14 @@
     padding-left: 5rem;
     padding-top: 3rem;
 }
-.memberContainer {
+.businessContainer {
     position: relative;
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.memberList {
+.businessList {
     position: relative;
     border-radius: 10px;
     background-color: #fff;
@@ -23,21 +23,18 @@
     width: 1000px;
     padding: 15px;
 }
-.memberList::-webkit-scrollbar {
-    display: none;
-}
-.member {
+.business {
     display: flex;
     align-items: center;
     position: relative;
     height: 40px;
     font-size: 20px;
 }
-.member div {
+.business div {
     position: absolute;
     right: 0;
 }
-.member div button {
+.business div button {
     all: unset;
     margin: 0 5px;
     cursor: pointer;
