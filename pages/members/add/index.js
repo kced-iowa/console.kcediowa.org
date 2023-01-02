@@ -1,6 +1,7 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import FormData from 'form-data';
 import Image from 'next/image'
 import Head from 'next/head';
 import axios from 'axios'
@@ -8,6 +9,8 @@ import styles from './Add.module.css'
 
 
 export default function AddMember (props) {
+
+    const api = process.env.NEXT_PUBLIC_APIBASE
 
     const [name, setName] = useState('')
     const [occupation, setOccupation] = useState('')
@@ -19,32 +22,29 @@ export default function AddMember (props) {
     const handleParagraph = ({target:{value}}) => setParagraph(value)
     const handleDate = ({target:{value}}) => setDate(value)
 
-    const cancelHandler = () => {
-        window.location = '/members'
+    const [imagePreview, setImagePreview] = useState('')
+    const [img, setImg] = useState('')
+    const [imgName, setImgName] = useState('')
+
+    const onImageChange = (e) => {
+        setImagePreview(URL.createObjectURL(e.target.files[0]))
+        setImg(e.target.files[0])
+        setImgName(e.target.files[0].name)
     }
 
-    const submitHandle = async (e) => {
-        e.preventDefault();
+    const submitHandler = (e) => {
+        e.preventDefault()
+            const formDatas = new FormData()
+            formDatas.append('name', name)
+            formDatas.append('occupation', occupation)
+            formDatas.append('bio', paragraph)
+            formDatas.append('join', date)
+            formDatas.append('image', img)
+        console.log(formDatas)
         axios
-        .post('https://api.horsaen.com/members', {
-            name: name,
-            occupation: occupation,
-            bio: paragraph,
-            join: date
-            // image: image
-        })
+        .post(api + '/members', formDatas)
         .then(res => console.log(res))
         .catch(err => console.log(err))
-        console.log(image)
-        alert('member successfully added')
-        cancelHandler()
-    }
-
-    const [image, setImage] = useState("")
-    const onImageChange = (event) => {
-        if (event.target.files && event.target.files[0]) {
-        setImage(URL.createObjectURL(event.target.files[0]));
-        }
     }
 
     return(
@@ -53,11 +53,11 @@ export default function AddMember (props) {
                 <title>Member | Add</title>
             </Head>
             <div className={styles.editMember}>
-                <form onSubmit={submitHandle} encType="multipart/form-data">
+                <form onSubmit={submitHandler} encType="multipart/form-data">
                     <div className={styles.title}>
                         <div className={styles.bar}/>
-                        <div className={styles.image}><Image alt='' src={image} layout='fill'/></div>
-                        <input type="file" onChange={onImageChange}></input>
+                        <div className={styles.image}><Image alt='' layout='fill' src={imagePreview} /></div>
+                        <input type="file" name='balls' onChange={onImageChange}></input>
                     </div>
                     <div className={styles.inputs}>
                         <div>
@@ -69,7 +69,7 @@ export default function AddMember (props) {
                     </div>
                     <div className={styles.buttons}>
                         <button type="submit">Add</button>
-                        <button onClick={cancelHandler}>Cancel</button>
+                        <button>Cancel</button>
                     </div>
                 </form>
             </div>

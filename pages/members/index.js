@@ -11,19 +11,23 @@ import { MdDelete } from 'react-icons/md'
 
 export default function Members() {
     const [members, setMembers] = useState([])
+
+    const api = process.env.NEXT_PUBLIC_APIBASE
+
     useEffect(() => {
+        const fetchMembers = () => {
+            axios
+            .get(api + '/members')
+            .then((res) => {
+                setMembers(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
         fetchMembers()
-    }, [])
-    const fetchMembers = () => {
-        axios
-        .get('https://api.horsaen.com/members')
-        .then((res) => {
-            setMembers(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
+    })
+    
     return (
         <div>
             <Head>
@@ -48,14 +52,13 @@ export default function Members() {
                                     }><BiEdit /></button>
                                     <button className={styles.delete} onClick={
                                         function deleteMember () {
-                                            const check = confirm('Do you want to delete this member?')
-                                                if (check == true) {
+                                            // const check = confirm('Do you want to delete this member?')
+                                                // if (check == true) {
                                                     axios
-                                                    .delete('https://api.horsaen.com/members/' + member._id)
+                                                    .delete(api + '/members/' + member._id)
                                                     .then(res => res.json())
                                                     .catch(err => console.log(err))
-                                                    setTimeout(function () {window.location.reload()},250)
-                                                } else {}
+                                                // } else {}
                                         }
                                     }><MdDelete/></button>
                                 </div>

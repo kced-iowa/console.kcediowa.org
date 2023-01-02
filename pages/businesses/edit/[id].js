@@ -3,6 +3,8 @@ import {useState, useEffect} from 'react'
 import { useRouter } from "next/router";
 import axios from "axios";
 
+const api = process.env.API_BASE
+
 export default function EditBusiness() {
     const router = useRouter()
     const { id } = router.query
@@ -12,7 +14,7 @@ export default function EditBusiness() {
     useEffect(() => {
         const getBusiness = () => {
             axios
-            .get('http://localhost:5000/business/' + id)
+            .get(api + '/business/' + id)
             .then((res) => {
                 setName(res.data.name)
             })

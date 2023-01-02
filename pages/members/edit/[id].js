@@ -8,6 +8,8 @@ import styles from './Edit.module.css'
 
 export default function AddMember () {
 
+    const api = process.env.NEXT_PUBLIC_APIBASE
+
     const [name, setName] = useState([])
     const [occupation, setOccupation] = useState('')
     const [paragraph, setParagraph] = useState('')
@@ -19,7 +21,7 @@ export default function AddMember () {
     useEffect(() => {
         const fetchAbout = () => {
             axios
-            .get('https://api.horsaen.com/members/' + id)
+            .get(api + '/members/' + id)
             .then((res) => {
                 setName(res.data.name)
                 setOccupation(res.data.occupation)
@@ -32,7 +34,7 @@ export default function AddMember () {
         }
         fetchAbout()
         
-    }, [id])
+    }, [api, id])
 
     const handleName = ({target:{value}}) => setName(value)
     const handleOccupation = ({target:{value}}) => setOccupation(value)

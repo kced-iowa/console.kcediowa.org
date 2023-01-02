@@ -8,7 +8,9 @@ import axios from 'axios';
 import styles from './Dashboard.module.css';
 
 import { BsBoxArrowUpRight } from 'react-icons/bs';
-    
+
+const api = process.env.API_BASE
+
 export default function Dashboard() {
     const [members, setMembers] = useState([])
     useEffect(() => {
@@ -16,7 +18,7 @@ export default function Dashboard() {
     }, [])
     const fetchMembers = () => {
         axios
-        .get('https://api.horsaen.com/members')
+        .get(api + '/members')
         .then((res) => {
             setMembers(res.data)
         })

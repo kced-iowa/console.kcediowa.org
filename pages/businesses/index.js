@@ -8,6 +8,8 @@ import styles from './Businesses.module.css'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete, MdOutlineAdd } from 'react-icons/md'
 
+const api = process.env.API_BASE
+
 export default function Businesses(){
 
     const [businesses, setBusinesses] = useState([])
@@ -16,7 +18,7 @@ export default function Businesses(){
     }, [])
     const fetchBusinesses = () => {
         axios
-        .get('https://api.horsaen.com/business')
+        .get(api + '/business')
         .then((res) => {
             setBusinesses(res.data)
         })
