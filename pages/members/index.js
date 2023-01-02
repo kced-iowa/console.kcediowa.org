@@ -52,13 +52,13 @@ export default function Members() {
                                     }><BiEdit /></button>
                                     <button className={styles.delete} onClick={
                                         function deleteMember () {
-                                            // const check = confirm('Do you want to delete this member?')
-                                                // if (check == true) {
+                                            const check = confirm('Do you want to delete this member?')
+                                                if (check == true) {
                                                     axios
                                                     .delete(api + '/members/' + member._id)
                                                     .then(res => res.json())
                                                     .catch(err => console.log(err))
-                                                // } else {}
+                                                } else {}
                                         }
                                     }><MdDelete/></button>
                                 </div>

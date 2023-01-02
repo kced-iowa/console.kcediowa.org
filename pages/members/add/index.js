@@ -47,6 +47,11 @@ export default function AddMember (props) {
         .catch(err => console.log(err))
     }
 
+    const cancelHandler = () => {
+        const url = '/members'
+        window.location = url
+    }
+
     return(
         <div className={styles.container}>
             <Head>
@@ -69,7 +74,7 @@ export default function AddMember (props) {
                     </div>
                     <div className={styles.buttons}>
                         <button type="submit">Add</button>
-                        <button>Cancel</button>
+                        <button onClick={cancelHandler} type="button">Cancel</button>
                     </div>
                 </form>
             </div>
