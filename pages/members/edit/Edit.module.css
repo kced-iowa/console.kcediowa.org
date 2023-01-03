@@ -5,13 +5,21 @@
     justify-content: center;
     align-items: center;
 }
+.sidebar,
 .editMember {
-    position: relative;
     background-color: #fff;
     height: 600px;
-    width: 1000px;
     border-radius: 10px;
     padding: 20px;
+}
+.sidebar {
+    margin-right: 100px;
+    width: 400px;
+    font-size: 20px;
+}
+.editMember {
+    position: relative;
+    width: 1000px;
 }
 .editMember form {
     height: 100%;

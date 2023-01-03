@@ -10,6 +10,8 @@ export default function AddMember () {
 
     const api = process.env.NEXT_PUBLIC_APIBASE
 
+    const [members, setMembers] = useState([])
+
     const [name, setName] = useState([])
     const [occupation, setOccupation] = useState('')
     const [paragraph, setParagraph] = useState('')
@@ -19,6 +21,18 @@ export default function AddMember () {
     const { id }= router.query
 
     useEffect(() => {
+        const fetchMembers = () => {
+            axios
+            .get(api + '/members/')
+            .then((res) => {
+                setMembers(res.data)
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+        fetchMembers()
         const fetchAbout = () => {
             axios
             .get(api + '/members/' + id)
@@ -33,7 +47,6 @@ export default function AddMember () {
             })
         }
         fetchAbout()
-        
     }, [api, id])
 
     const handleName = ({target:{value}}) => setName(value)
@@ -55,7 +68,7 @@ export default function AddMember () {
     const submitHandle = (e) => {
         e.preventDefault();
         axios
-        .patch('https://api.horsaen.com/members/' + id, {
+        .patch(api + '/members/' + id, {
             name: name,
             occupation: occupation,
             bio: paragraph,
@@ -69,32 +82,41 @@ export default function AddMember () {
     }
 
     return(
-        <div className={styles.container}>
+        <>
             <Head>
                 <title>Member | Edit</title>
             </Head>
-            <div className={styles.editMember}>
-                <form onSubmit={submitHandle} encType="multipart/form-data">
-                    <div className={styles.title}>
-                        <div className={styles.bar}/>
-                        <div className={styles.image}><Image alt='' src={image} layout='fill'/></div>
-                        <input type="file" onChange={onImageChange}></input>
-                    </div>
-                    <div className={styles.inputs}>
-                        <div>
-                            <input value={name} placeholder="Name" onChange={handleName} />
-                            <input value={occupation} placeholder="Occupation" onChange={handleOccupation} />
-                            <input value={date} placeholder="Member Since" onChange={handleDate} />
+            <div className={styles.container}>
+                <div className={styles.sidebar}>
+                    {members.map((member) => (
+                        <div key={member._id}>
+                            <span>{member.name}</span>
                         </div>
-                        <textarea value={paragraph} placeholder="Paragraph" onChange={handleParagraph} />
-                    </div>
-                    <div className={styles.buttons}>
-                        <button type="submit">Add</button>
-                        <button onClick={cancelHandler}>Cancel</button>
-                    </div>
-                </form>
+                    ))}
+                </div>
+                <div className={styles.editMember}>
+                    <form onSubmit={submitHandle} encType="multipart/form-data">
+                        <div className={styles.title}>
+                            <div className={styles.bar}/>
+                            <div className={styles.image}><Image alt='' src={image} layout='fill'/></div>
+                            <input type="file" onChange={onImageChange}></input>
+                        </div>
+                        <div className={styles.inputs}>
+                            <div>
+                                <input value={name} placeholder="Name" onChange={handleName} />
+                                <input value={occupation} placeholder="Occupation" onChange={handleOccupation} />
+                                <input value={date} placeholder="Member Since" onChange={handleDate} />
+                            </div>
+                            <textarea value={paragraph} placeholder="Paragraph" onChange={handleParagraph} />
+                        </div>
+                        <div className={styles.buttons}>
+                            <button type="submit">Add</button>
+                            <button onClick={cancelHandler}>Cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

@@ -7,7 +7,6 @@ import Head from 'next/head';
 import axios from 'axios'
 import styles from './Add.module.css'
 
-
 export default function AddMember (props) {
 
     const api = process.env.NEXT_PUBLIC_APIBASE
@@ -32,6 +31,13 @@ export default function AddMember (props) {
         setImgName(e.target.files[0].name)
     }
 
+    const [loading, setLoading] = useState('')
+
+    const returnHandler = () => {
+        const url = '/members'
+        window.location = url
+    }
+    
     const submitHandler = (e) => {
         e.preventDefault()
             const formDatas = new FormData()
@@ -43,13 +49,12 @@ export default function AddMember (props) {
         console.log(formDatas)
         axios
         .post(api + '/members', formDatas)
-        .then(res => console.log(res))
+        .then(res => {
+            if(res.status === 201) {
+                returnHandler()
+            }
+        })
         .catch(err => console.log(err))
-    }
-
-    const cancelHandler = () => {
-        const url = '/members'
-        window.location = url
     }
 
     return(
@@ -74,8 +79,9 @@ export default function AddMember (props) {
                     </div>
                     <div className={styles.buttons}>
                         <button type="submit">Add</button>
-                        <button onClick={cancelHandler} type="button">Cancel</button>
+                        <button onClick={returnHandler} type="button">Cancel</button>
                     </div>
+                    <span>{loading}</span>
                 </form>
             </div>
         </div>
