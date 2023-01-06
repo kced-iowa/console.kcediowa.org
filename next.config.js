@@ -6,7 +6,7 @@ const nextConfig = {
 
 module.exports = {
   images: {
-    domains: ['upload.wikimedia.org', 'external-content.duckduckgo.com'],
+    domains: ['upload.wikimedia.org', 'external-content.duckduckgo.com', 'localhost', 'api.horsaen.com'],
   },
   async redirects() {
     return [
