@@ -46,7 +46,6 @@ export default function AddMember (props) {
             formDatas.append('bio', paragraph)
             formDatas.append('join', date)
             formDatas.append('image', img)
-        console.log(formDatas)
         axios
         .post(api + '/members', formDatas)
         .then(res => {

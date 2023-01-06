@@ -6,6 +6,9 @@ import Head from 'next/head';
 import axios from 'axios'
 import styles from './Edit.module.css'
 
+import { BiEdit } from 'react-icons/bi'
+import { MdDelete } from 'react-icons/md'
+
 export default function AddMember () {
 
     const api = process.env.NEXT_PUBLIC_APIBASE
@@ -26,7 +29,6 @@ export default function AddMember () {
             .get(api + '/members/')
             .then((res) => {
                 setMembers(res.data)
-                console.log(res.data)
             })
             .catch((err) => {
                 console.log(err)
@@ -41,6 +43,8 @@ export default function AddMember () {
                 setOccupation(res.data.occupation)
                 setParagraph(res.data.bio)
                 setDate(res.data.join)
+                setImg(res.data.image)
+                setImagePreview(api + '/cdn/members/' + res.data.image)
             })
             .catch((err) =>{
                 console.log(err)
@@ -58,27 +62,32 @@ export default function AddMember () {
         window.location = '/members'
     }
 
-    const [image, setImage] = useState("")
-    const onImageChange = (event) => {
-        if (event.target.files && event.target.files[0]) {
-        setImage(URL.createObjectURL(event.target.files[0]));
-        }
+    const [imagePreview, setImagePreview] = useState('')
+    const [img, setImg] = useState('')
+
+    const onImageChange = (e) => {
+        setImagePreview(URL.createObjectURL(e.target.files[0]))
+        setImg(e.target.files[0])
     }
 
     const submitHandle = (e) => {
         e.preventDefault();
+        const formDatas = new FormData()
+            formDatas.append('name', name)
+            formDatas.append('occupation', occupation)
+            formDatas.append('bio', paragraph)
+            formDatas.append('join', date)
+            formDatas.append('image', img)
         axios
-        .patch(api + '/members/' + id, {
-            name: name,
-            occupation: occupation,
-            bio: paragraph,
-            join: date
-        })
-        .then((res) => {
+        .patch(api + '/members/' + id, formDatas)
+        .then(res => {
+            if(res.status === 201) {
+                returnHandler()
+                console.log(res)
+            }
             console.log(res)
         })
-        alert('Member successfully updated.')
-        window.location = '/members'
+        .catch(err => console.log(err))
     }
 
     return(
@@ -89,8 +98,27 @@ export default function AddMember () {
             <div className={styles.container}>
                 <div className={styles.sidebar}>
                     {members.map((member) => (
-                        <div key={member._id}>
-                            <span>{member.name}</span>
+                        <div key={member._id} className={styles.member}>
+                            <p>{member.name}</p>
+                            <div>
+                                <button className={styles.edit} onClick={
+                                    function editMember () {
+                                        var url = '/members/edit/' + member._id
+                                        window.location = url
+                                    }
+                                }><BiEdit /></button>
+                                <button className={styles.delete} onClick={
+                                    function deleteMember () {
+                                        const check = confirm('Do you want to delete this member?')
+                                            if (check == true) {
+                                                axios
+                                                .delete(api + '/members/' + member._id)
+                                                .then(res => res.json())
+                                                .catch(err => console.log(err))
+                                            } else {}
+                                    }
+                                }><MdDelete/></button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -98,7 +126,7 @@ export default function AddMember () {
                     <form onSubmit={submitHandle} encType="multipart/form-data">
                         <div className={styles.title}>
                             <div className={styles.bar}/>
-                            <div className={styles.image}><Image alt='' src={image} layout='fill'/></div>
+                            <div className={styles.image}><Image alt='' src={imagePreview} layout='fill'/></div>
                             <input type="file" onChange={onImageChange}></input>
                         </div>
                         <div className={styles.inputs}>

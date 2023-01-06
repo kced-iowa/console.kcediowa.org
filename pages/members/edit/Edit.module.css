@@ -13,9 +13,26 @@
     padding: 20px;
 }
 .sidebar {
+    display: flex;
+    flex-direction: column;
     margin-right: 100px;
     width: 400px;
     font-size: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+.member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.member div button {
+    all: unset;
+    margin: 0 5px;
+    cursor: pointer;
 }
 .editMember {
     position: relative;
