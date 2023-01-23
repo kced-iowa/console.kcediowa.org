@@ -42,6 +42,13 @@ export default function EditBusiness() {
             .then((res) => {
                 setImagePreview(api + '/cdn/business/' + res.data.coverimg)
                 setImagePreview2(api + '/cdn/business/' + res.data.mainimg)
+                setName(res.data.name)
+                setType(res.data.type)
+                setPhone(res.data.phone)
+                setAddress(res.data.address)
+                setBio(res.data.bio)
+                setWebsite(res.data.website)
+                setFacebook(res.data.facebook)
             })
         }
         getBusiness()
