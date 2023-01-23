@@ -19,6 +19,22 @@ export default function EditBusiness() {
     const [imagePreview2, setImagePreview2] = useState('')
     const [image2, setImage2] = useState('')
     
+    // oh my god find a different way to handle this
+    const [name, setName] = useState('')
+        const handleName = ({target:{value}}) => setName(value)
+    const [type, setType] = useState('')
+        const handleType = ({target:{value}}) => setType(value)
+    const [phone, setPhone] = useState('')
+        const handlePhone = ({target:{value}}) => setPhone(value)
+    const [address, setAddress] = useState('')
+        const handleAddress = ({target:{value}}) => setAddress(value)
+    const [bio, setBio] = useState('')
+        const handleBio = ({target:{value}}) => setBio(value)
+    const [website, setWebsite] = useState('')
+        const handleWebsite = ({target:{value}}) => setWebsite(value)
+    const [facebook, setFacebook] = useState('')
+        const handleFacebook = ({target:{value}}) => setFacebook(value)
+
     useEffect(() => {
         const getBusiness = () => {
             axios
@@ -46,14 +62,31 @@ export default function EditBusiness() {
         setImage2(e.target.files[0]);
     }
 
-
     const returnHandler = () => {
         const url = '/businesses'
         window.location = url
     }
 
-    const submitHandler = () => {
-        console.log('e')
+    const submitHandler = (e) => {
+        e.preventDefault()
+        const formData = new FormData()
+            formData.append('name', name)
+            formData.append('type', type)
+            formData.append('phone', phone)
+            formData.append('address', address)
+            formData.append('bio', bio)
+            formData.append('website', website)
+            formData.append('facebook', facebook)
+        axios
+        .patch(api + '/businesses/' + id, formData)
+        .then(res => {
+            if(res.status === 201) {
+                returnHandler()
+                console.log(res)
+            }
+            console.log(res)
+        })
+        .catch(err => console.log(err))
     }
 
     return (
@@ -82,13 +115,13 @@ export default function EditBusiness() {
                                 </div>
                         </div>
                         <div className={styles.inputs}>
-                            <input type="text" id='name' placeholder="Name" />
-                            <input type="text" id='type' placeholder="Business Type" />
-                            <input type="tel" id='phone' placeholder="Phone Number" />
-                            <input type="text" id='address' placeholder="Address" />
-                            <input type="text" id='bio' placeholder="About Business" />
-                            <input type="text" id='website' placeholder="Website" />
-                            <input type="text" id='facebook' placeholder="Facebook" />
+                            <input type="text" id='name' placeholder="Name" onChange={handleName} />
+                            <input type="text" id='type' placeholder="Business Type" onChange={handleType} />
+                            <input type="tel" id='phone' placeholder="Phone Number" onChange={handlePhone} />
+                            <input type="text" id='address' placeholder="Address" onChange={handleAddress} />
+                            <input type="text" id='bio' placeholder="About Business" onChange={handleBio} />
+                            <input type="text" id='website' placeholder="Website" onChange={handleWebsite} />
+                            <input type="text" id='facebook' placeholder="Facebook" onChange={handleFacebook} />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>

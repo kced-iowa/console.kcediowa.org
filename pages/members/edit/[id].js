@@ -14,11 +14,15 @@ export default function AddMember () {
     const api = process.env.NEXT_PUBLIC_APIBASE
 
     const [members, setMembers] = useState([])
-
+    
     const [name, setName] = useState([])
+    const handleName = ({target:{value}}) => setName(value)
     const [occupation, setOccupation] = useState('')
+    const handleOccupation = ({target:{value}}) => setOccupation(value)
     const [paragraph, setParagraph] = useState('')
+        const handleParagraph = ({target:{value}}) => setParagraph(value)
     const [date, setDate] = useState('')
+        const handleDate = ({target:{value}}) => setDate(value)
 
     const router = useRouter()
     const { id }= router.query
@@ -53,10 +57,6 @@ export default function AddMember () {
         fetchAbout()
     }, [api, id])
 
-    const handleName = ({target:{value}}) => setName(value)
-    const handleOccupation = ({target:{value}}) => setOccupation(value)
-    const handleParagraph = ({target:{value}}) => setParagraph(value)
-    const handleDate = ({target:{value}}) => setDate(value)
 
     const cancelHandler = () => {
         window.location = '/members'
