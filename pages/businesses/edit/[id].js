@@ -1,31 +1,104 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { withPageAuthRequired, useUser } from "@auth0/nextjs-auth0";
 import {useState, useEffect} from 'react'
+import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
+import styles from './Edit.module.css'
 
-const api = process.env.API_BASE
 
 export default function EditBusiness() {
+    
+    const api = process.env.NEXT_PUBLIC_APIBASE
+    
     const router = useRouter()
     const { id } = router.query
 
-    const [name, setName] = useState('')
-
+    const [imagePreview, setImagePreview] = useState('')
+    const [image, setImage] = useState('')
+    const [imagePreview2, setImagePreview2] = useState('')
+    const [image2, setImage2] = useState('')
+    
     useEffect(() => {
         const getBusiness = () => {
             axios
             .get(api + '/business/' + id)
             .then((res) => {
-                setName(res.data.name)
+                setImagePreview(api + '/cdn/business/' + res.data.coverimg)
+                setImagePreview2(api + '/cdn/business/' + res.data.mainimg)
             })
         }
         getBusiness()
-    }, [id])
+    }, [id, api])
+    
+    const { user, error, isLoading } = useUser();
+    // i don't know why auth0 needs this, but it won't run without it...
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
+    
+    const onImageChange = (e) => {
+        setImagePreview(URL.createObjectURL(e.target.files[0]));
+        setImage(e.target.files[0]);
+    }
+    
+    const onImageChange2 = (e) => {
+        setImagePreview2(URL.createObjectURL(e.target.files[0]));
+        setImage2(e.target.files[0]);
+    }
+
+
+    const returnHandler = () => {
+        const url = '/businesses'
+        window.location = url
+    }
+
+    const submitHandler = () => {
+        console.log('e')
+    }
 
     return (
-        <div>
-            {name}
-        </div>
+        <>
+            <Head>
+                <title>Business | Add</title>
+            </Head>
+            <div className={styles.page}>
+                <div className={styles.add}>
+                    <form onSubmit={submitHandler} encType='multipart/form-data'>
+                        <div className={styles.title}>
+                            <div className={styles.bar} />
+                                <div className={styles.image}>
+                                    <Image alt='' src={imagePreview} height='200px' width='200px'/>
+                                    <div>
+                                        <input type='file' onChange={onImageChange} accept='image/*' />
+                                        <span>Cover Image</span>
+                                    </div>
+                                </div>
+                                <div className={styles.image}>
+                                    <Image alt='' src={imagePreview2} height='200px' width='200px'/>
+                                    <div>
+                                        <input type='file' onChange={onImageChange2}/>
+                                        <span>Main Image</span>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className={styles.inputs}>
+                            <input type="text" id='name' placeholder="Name" />
+                            <input type="text" id='type' placeholder="Business Type" />
+                            <input type="tel" id='phone' placeholder="Phone Number" />
+                            <input type="text" id='address' placeholder="Address" />
+                            <input type="text" id='bio' placeholder="About Business" />
+                            <input type="text" id='website' placeholder="Website" />
+                            <input type="text" id='facebook' placeholder="Facebook" />
+                        </div>
+                        <div className={styles.buttons}>
+                            <button type="submit">Add</button>
+                            <button onClick={returnHandler} type="button">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <span className={styles.editStatus}>Editing as [{user.username}]</span>
+            </div>
+        </>
     );
 }
 

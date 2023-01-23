@@ -8,24 +8,24 @@ import styles from './Businesses.module.css'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete, MdOutlineAdd } from 'react-icons/md'
 
-const api = process.env.API_BASE
+const api = process.env.NEXT_PUBLIC_APIBASE
 
 export default function Businesses(){
-
     const [businesses, setBusinesses] = useState([])
     useEffect(() => {
+        const fetchBusinesses = () => {
+            axios
+            .get(api + '/business')
+            .then((res) => {
+                setBusinesses(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
         fetchBusinesses()
-    }, [])
-    const fetchBusinesses = () => {
-        axios
-        .get(api + '/business')
-        .then((res) => {
-            setBusinesses(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
+    })
+    
     return (
         <div>
             <Head>
@@ -52,8 +52,10 @@ export default function Businesses(){
                                         function deleteMember () {
                                             const check = confirm('Do you want to delete this business?')
                                                 if (check == true) {
-                                                    
-                                                    setTimeout(function () {window.location.reload()},250)
+                                                    axios
+                                                    .delete(api + '/business/' + business._id)
+                                                    .then(res => res.json())
+                                                    .catch(err => console.log(err))
                                                 } else {}
                                         }
                                     }><MdDelete/></button>

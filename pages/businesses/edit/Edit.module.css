@@ -64,5 +64,7 @@
     margin: 0 5px;
 }
 .editStatus {
+    padding-top: 50px;
     user-select: none;
+    color: #fff;
 }

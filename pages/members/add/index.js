@@ -66,7 +66,7 @@ export default function AddMember (props) {
                     <div className={styles.title}>
                         <div className={styles.bar}/>
                         <div className={styles.image}><Image alt='' layout='fill' src={imagePreview} /></div>
-                        <input type="file" name='balls' onChange={onImageChange}></input>
+                        <input type="file" onChange={onImageChange}></input>
                     </div>
                     <div className={styles.inputs}>
                         <div>
@@ -80,7 +80,6 @@ export default function AddMember (props) {
                         <button type="submit">Add</button>
                         <button onClick={returnHandler} type="button">Cancel</button>
                     </div>
-                    <span>{loading}</span>
                 </form>
             </div>
         </div>
