@@ -92,8 +92,7 @@ export default function EditBusiness() {
         .patch(api + '/business/' + id, formData)
         .then(res => {
             if(res.status === 201) {
-                // returnHandler()
-                console.log(res)
+                returnHandler()
             }
             console.log(res)
         })
