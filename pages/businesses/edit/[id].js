@@ -42,6 +42,8 @@ export default function EditBusiness() {
             .then((res) => {
                 setImagePreview(api + '/cdn/business/' + res.data.coverimg)
                 setImagePreview2(api + '/cdn/business/' + res.data.mainimg)
+                setImage(res.data.coverimg)
+                setImage2(res.data.mainimg)
                 setName(res.data.name)
                 setType(res.data.type)
                 setPhone(res.data.phone)
@@ -77,6 +79,8 @@ export default function EditBusiness() {
     const submitHandler = (e) => {
         e.preventDefault()
         const formData = new FormData()
+            formData.append('coverimg', image)
+            formData.append('mainimg', image2)
             formData.append('name', name)
             formData.append('type', type)
             formData.append('phone', phone)
@@ -85,10 +89,10 @@ export default function EditBusiness() {
             formData.append('website', website)
             formData.append('facebook', facebook)
         axios
-        .patch(api + '/businesses/' + id, formData)
+        .patch(api + '/business/' + id, formData)
         .then(res => {
             if(res.status === 201) {
-                returnHandler()
+                // returnHandler()
                 console.log(res)
             }
             console.log(res)
@@ -122,13 +126,13 @@ export default function EditBusiness() {
                                 </div>
                         </div>
                         <div className={styles.inputs}>
-                            <input type="text" id='name' placeholder="Name" onChange={handleName} />
-                            <input type="text" id='type' placeholder="Business Type" onChange={handleType} />
-                            <input type="tel" id='phone' placeholder="Phone Number" onChange={handlePhone} />
-                            <input type="text" id='address' placeholder="Address" onChange={handleAddress} />
-                            <input type="text" id='bio' placeholder="About Business" onChange={handleBio} />
-                            <input type="text" id='website' placeholder="Website" onChange={handleWebsite} />
-                            <input type="text" id='facebook' placeholder="Facebook" onChange={handleFacebook} />
+                            <input type="text" id='name' value={name} placeholder="Name" onChange={handleName} />
+                            <input type="text" id='type' value={type} placeholder="Business Type" onChange={handleType} />
+                            <input type="tel" id='phone' value={phone} placeholder="Phone Number" onChange={handlePhone} />
+                            <input type="text" id='address' value={address} placeholder="Address" onChange={handleAddress} />
+                            <input type="text" id='bio' value={bio} placeholder="About Business" onChange={handleBio} />
+                            <input type="text" id='website' value={website} placeholder="Website" onChange={handleWebsite} />
+                            <input type="text" id='facebook' value={facebook} placeholder="Facebook" onChange={handleFacebook} />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
