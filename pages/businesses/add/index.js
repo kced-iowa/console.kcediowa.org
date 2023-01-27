@@ -16,6 +16,9 @@ export default function AddBusiness() {
     const [image, setImage] = useState('')
     const [image2, setImage2] = useState('')
 
+    const [contactsPreview, setContactsPreview] = useState(api + '/cdn/members/Black.jpg')
+    const [contactsImage, setContactsImage] = useState('')
+
     const { user, error, isLoading } = useUser();
     // i don't know why auth0 needs this, but it won't run without it...
     if (isLoading) return <div>Loading...</div>;
@@ -29,6 +32,11 @@ export default function AddBusiness() {
     const onImageChange2 = (e) => {
         setImagePreview2(URL.createObjectURL(e.target.files[0]));
         setImage2(e.target.files[0]);
+    }
+
+    const onContactChange = (e) => {
+        setContactsPreview(URL.createObjectURL(e.target.files[0]))
+        setContactsImage(e.target.files[0])
     }
 
     const submitHandler = (e) => {
@@ -63,8 +71,8 @@ export default function AddBusiness() {
                 <title>Business | Add</title>
             </Head>
             <div className={styles.page}>
-                <div className={styles.add}>
-                    <form onSubmit={submitHandler} encType='multipart/form-data'>
+                <form onSubmit={submitHandler} encType='multipart/form-data'>
+                    <div className={styles.add}>
                         <div className={styles.title}>
                             <div className={styles.bar} />
                                 <div className={styles.image}>
@@ -95,8 +103,11 @@ export default function AddBusiness() {
                             <button type="submit">Add</button>
                             <button onClick={returnHandler} type="button">Cancel</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div className={styles.contacts}>
+                        
+                    </div>
+                </form>
                 <span className={styles.editStatus}>Editing as [{user.username}]</span>
             </div>
         </>

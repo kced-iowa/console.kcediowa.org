@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
 }
+.page form {
+    display: flex;
+}
 .title {
     display: flex;
 }
@@ -27,20 +30,20 @@
     display: flex;
     align-items: center;
 }
+.add,
+.contacts {
+    background-color: #fff;
+    border-radius: 10px;
+    height: 600px;
+    padding: 15px;
+}
 .add {
     position: relative;
-    border-radius: 10px;
-    background-color: #fff;
     overflow: scroll;
     scrollbar-width: none;
     overflow-x: hidden;
-    height: 600px;
     width: 1000px;
-    padding: 15px;
-}
-.add form {
-    height: 100%;
-    position: relative;
+    margin-right: 50px;
 }
 .inputs {
     width: 100%;
@@ -57,11 +60,14 @@
 }
 .buttons {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 5px;
+    right: 5px;
 }
 .buttons button {
     margin: 0 5px;
+}
+.contacts {
+    width: 500px;
 }
 .editStatus {
     user-select: none;
