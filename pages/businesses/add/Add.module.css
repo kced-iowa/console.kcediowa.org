@@ -31,7 +31,7 @@
     align-items: center;
 }
 .add,
-.contacts {
+.contact {
     background-color: #fff;
     border-radius: 10px;
     height: 600px;
@@ -46,17 +46,23 @@
     margin-right: 50px;
 }
 .inputs {
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-.inputs input {
+.inputs input,
+.inputs textarea {
+
     all: unset;
+    height: 20px;
     width: 400px;
     padding: 10px;
     border-radius: 10px;
-    margin: 10px 0;
+    margin: 10px 10px 10px 0;
     border: solid 1px #000;
+}
+.inputs textarea {
+    resize: none;
+    height: 100px;
 }
 .buttons {
     position: absolute;
@@ -66,9 +72,17 @@
 .buttons button {
     margin: 0 5px;
 }
-.contacts {
+.contact {
     width: 500px;
 }
+.contactTitle div {
+    display: flex;
+}
+.contactTitle span {
+    font-size: 30px;
+}
 .editStatus {
+    padding-top: 50px;
     user-select: none;
+    color: #fff;
 }

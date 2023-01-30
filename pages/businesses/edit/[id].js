@@ -35,6 +35,13 @@ export default function EditBusiness() {
     const [facebook, setFacebook] = useState('')
         const handleFacebook = ({target:{value}}) => setFacebook(value)
 
+    const [contactName, setContactName] = useState('')
+        const handleContactName = ({target:{value}}) => setContactName(value)
+    const [contactPosition, setContactPosition] = useState('')
+        const handleContactPosition = ({target:{value}}) => setContactPosition(value)
+    const [contactNumber, setContactNumber] = useState('')
+        const handleContactNumber = ({target:{value}}) => setContactNumber(value)
+
     useEffect(() => {
         const getBusiness = () => {
             axios

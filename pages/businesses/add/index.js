@@ -95,17 +95,29 @@ export default function AddBusiness() {
                             <input type="text" id='type' placeholder="Business Type" />
                             <input type="tel" id='phone' placeholder="Phone Number" />
                             <input type="text" id='address' placeholder="Address" />
-                            <input type="text" id='bio' placeholder="About Business" />
                             <input type="text" id='website' placeholder="Website" />
                             <input type="text" id='facebook' placeholder="Facebook" />
+                            <textarea id='bio' placeholder="Bio" />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
                             <button onClick={returnHandler} type="button">Cancel</button>
                         </div>
                     </div>
-                    <div className={styles.contacts}>
-                        
+                    <div className={styles.contact}>
+                        <div className={styles.contactTitle}>
+                            <span>Contact Info</span>
+                            <div>
+                                <div className={styles.bar} />
+                                <Image alt='' src={contactsPreview} height='200px' width='200px' />
+                                <input type='file' accept='image/*' onChange={onContactChange} />
+                            </div>
+                        </div>
+                        <div className={styles.inputs}>
+                            <input placeholder='Name' />
+                            <input placeholder='Position' />
+                            <input type='tel' placeholder='Phone Number' />
+                        </div>
                     </div>
                 </form>
                 <span className={styles.editStatus}>Editing as [{user.username}]</span>
