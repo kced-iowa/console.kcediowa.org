@@ -39,33 +39,33 @@ export default function AddBusiness() {
         setContactsImage(e.target.files[0])
     }
 
-    // create contact array
-    const contact = []
-
     const submitHandler = (e) => {
         e.preventDefault();
             const formDatas = new FormData();
-            // formDatas.append('coverimg', image)
-            // formDatas.append('mainimg', image2)
-            // formDatas.append('name', e.target.name.value)
-            // formDatas.append('type', e.target.type.value)
-            // formDatas.append('phone', e.target.phone.value)
-            // formDatas.append('address', e.target.address.value)
-            // formDatas.append('bio', e.target.bio.value)
-            // formDatas.append('website', e.target.website.value)
-            // formDatas.append('facebook', e.target.facebook.value)
-            contact.push({name: e.target.contactName.value, position: e.target.contactPosition.value, number: e.target.contactNumber.value})
-            formDatas.append('contact', JSON.stringify(contact))
-            console.log(formDatas)
-        // axios
-        // .post(api + '/business', formDatas)
-        // .then(res => {
-        //     // if(res.status === 201) {
-        //     //     returnHandler()
-        //     // }
-        //     console.log(res)
-        // })
-        // .catch(err => console.log(err))
+            formDatas.append('coverimg', image)
+            formDatas.append('mainimg', image2)
+            formDatas.append('name', e.target.name.value)
+            formDatas.append('type', e.target.type.value)
+            formDatas.append('phone', e.target.phone.value)
+            formDatas.append('address', e.target.address.value)
+            formDatas.append('bio', e.target.bio.value)
+            formDatas.append('website', e.target.website.value)
+            formDatas.append('facebook', e.target.facebook.value)
+
+            // add contact data to object, should work ??
+            formDatas.append('contact[0]["name"]', e.target.contactName.value)
+            formDatas.append('contact[0]["position"]', e.target.contactPosition.value)
+            formDatas.append('contact[0]["number"]', e.target.contactNumber.value)
+
+        axios
+        .post(api + '/business', formDatas)
+        .then(res => {
+            // if(res.status === 201) {
+            //     returnHandler()
+            // }
+            console.log(res)
+        })
+        .catch(err => console.log(err))
     }
     const returnHandler = () => {
         const url = '/businesses'
