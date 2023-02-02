@@ -54,7 +54,7 @@ export default function Businesses(){
                                                 if (check == true) {
                                                     axios
                                                     .delete(api + '/business/' + business._id)
-                                                    .then(res => res.json())
+                                                    .then(res => console.log(res))
                                                     .catch(err => console.log(err))
                                                 } else {}
                                         }

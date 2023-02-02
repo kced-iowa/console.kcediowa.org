@@ -39,6 +39,11 @@ export default function AddBusiness() {
         setContactsImage(e.target.files[0])
     }
 
+    const cum = {
+        name: "John",
+        position: "hi",
+        number: 234234
+    }
     const submitHandler = (e) => {
         e.preventDefault();
             const formDatas = new FormData();
@@ -51,19 +56,20 @@ export default function AddBusiness() {
             formDatas.append('bio', e.target.bio.value)
             formDatas.append('website', e.target.website.value)
             formDatas.append('facebook', e.target.facebook.value)
-
+            const contactObj = {
+                name: e.target.contactName.value,
+                position: e.target.contactPosition.value,
+                number: e.target.contactNumber.value
+            }
             // add contact data to object, should work ??
-            formDatas.append('contact[0]["name"]', e.target.contactName.value)
-            formDatas.append('contact[0]["position"]', e.target.contactPosition.value)
-            formDatas.append('contact[0]["number"]', e.target.contactNumber.value)
-
+            const contactParsed = JSON.stringify(contactObj)
+            formDatas.append("contact", contactParsed)
         axios
         .post(api + '/business', formDatas)
         .then(res => {
-            // if(res.status === 201) {
-            //     returnHandler()
-            // }
-            console.log(res)
+            if(res.status === 201) {
+                returnHandler()
+            }
         })
         .catch(err => console.log(err))
     }

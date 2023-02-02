@@ -14,28 +14,12 @@ export default function EditBusiness() {
     const router = useRouter()
     const { id } = router.query
 
-    const [imagePreview, setImagePreview] = useState('')
-    const [image, setImage] = useState('')
-    const [imagePreview2, setImagePreview2] = useState('')
-    const [image2, setImage2] = useState('')
-    
-    // oh my god find a different way to handle this
-    const [name, setName] = useState('')
-        const handleName = ({target:{value}}) => setName(value)
-    const [type, setType] = useState('')
-        const handleType = ({target:{value}}) => setType(value)
-    const [phone, setPhone] = useState('')
-        const handlePhone = ({target:{value}}) => setPhone(value)
-    const [address, setAddress] = useState('')
-        const handleAddress = ({target:{value}}) => setAddress(value)
-    const [bio, setBio] = useState('')
-        const handleBio = ({target:{value}}) => setBio(value)
-    const [website, setWebsite] = useState('')
-        const handleWebsite = ({target:{value}}) => setWebsite(value)
-    const [facebook, setFacebook] = useState('')
-        const handleFacebook = ({target:{value}}) => setFacebook(value)
+    const [data, setData] = useState([])
 
-    const [contact, setContact] = useState([])
+    const [imagePreview, setImagePreview] = useState(null)
+    const [image, setImage] = useState('')
+    const [imagePreview2, setImagePreview2] = useState(null)
+    const [image2, setImage2] = useState('')
 
     useEffect(() => {
         const getBusiness = () => {
@@ -44,16 +28,7 @@ export default function EditBusiness() {
             .then((res) => {
                 setImagePreview(api + '/cdn/business/' + res.data.coverimg)
                 setImagePreview2(api + '/cdn/business/' + res.data.mainimg)
-                setImage(res.data.coverimg)
-                setImage2(res.data.mainimg)
-                setName(res.data.name)
-                setType(res.data.type)
-                setPhone(res.data.phone)
-                setAddress(res.data.address)
-                setBio(res.data.bio)
-                setWebsite(res.data.website)
-                setFacebook(res.data.facebook)
-                setContact(res.data.contact)
+                setData(res.data)
             })
         }
         getBusiness()
@@ -128,13 +103,13 @@ export default function EditBusiness() {
                                 </div>
                         </div>
                         <div className={styles.inputs}>
-                            <input type="text" id='name' value={name} placeholder="Name" onChange={handleName} />
-                            <input type="text" id='type' value={type} placeholder="Business Type" onChange={handleType} />
-                            <input type="tel" id='phone' value={phone} placeholder="Phone Number" onChange={handlePhone} />
-                            <input type="text" id='address' value={address} placeholder="Address" onChange={handleAddress} />
-                            <input type="text" id='bio' value={bio} placeholder="About Business" onChange={handleBio} />
-                            <input type="text" id='website' value={website} placeholder="Website" onChange={handleWebsite} />
-                            <input type="text" id='facebook' value={facebook} placeholder="Facebook" onChange={handleFacebook} />
+                            <input type="text" id='name' defaultValue={data.name} placeholder="Name" />
+                            <input type="text" id='type' defaultValue={data.type} placeholder="Business Type" />
+                            <input type="tel" id='phone' defaultValue={data.phone} placeholder="Phone Number" />
+                            <input type="text" id='address' defaultValue={data.address} placeholder="Address" />
+                            <input type="text" id='bio' defaultValue={data.bio} placeholder="About Business" />
+                            <input type="text" id='website' defaultValue={data.website} placeholder="Website" />
+                            <input type="text" id='facebook' defaultValue={data.facebook} placeholder="Facebook" />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
