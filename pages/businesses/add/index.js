@@ -64,9 +64,9 @@ export default function AddBusiness() {
         axios
         .post(api + '/business', formDatas)
         .then(res => {
-            // if(res.status === 201) {
-            //     returnHandler()
-            // }
+            if(res.status === 201) {
+                returnHandler()
+            }
             console.log(res)
         })
         .catch(err => console.log(err))
@@ -105,9 +105,9 @@ export default function AddBusiness() {
                             <input type="text" id='type' placeholder="Business Type" />
                             <input type="tel" id='phone' placeholder="Phone Number" />
                             <input type="text" id='address' placeholder="Address" />
-                            <input type="text" id='website' placeholder="Website" />
+                            <input type="url" id='website' placeholder="Website" />
                             <input type="text" id='facebook' placeholder="Facebook" />
-                            <textarea id='bio' placeholder="Bio" />
+                            <textarea id='bio' placeholder="About Business" />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
