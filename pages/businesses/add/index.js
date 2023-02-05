@@ -39,16 +39,13 @@ export default function AddBusiness() {
         setContactsImage(e.target.files[0])
     }
 
-    const cum = {
-        name: "John",
-        position: "hi",
-        number: 234234
-    }
     const submitHandler = (e) => {
         e.preventDefault();
             const formDatas = new FormData();
             formDatas.append('coverimg', image)
             formDatas.append('mainimg', image2)
+            // find how to append the image to the contactObj object ???
+            formDatas.append('contactimg', contactsImage)
             formDatas.append('name', e.target.name.value)
             formDatas.append('type', e.target.type.value)
             formDatas.append('phone', e.target.phone.value)
@@ -59,17 +56,18 @@ export default function AddBusiness() {
             const contactObj = {
                 name: e.target.contactName.value,
                 position: e.target.contactPosition.value,
-                number: e.target.contactNumber.value
+                number: e.target.contactNumber.value,
+                email: e.target.contactEmail.value,
+                website: e.target.contactWebsite.value
             }
-            // add contact data to object, should work ??
-            const contactParsed = JSON.stringify(contactObj)
-            formDatas.append("contact", contactParsed)
+            formDatas.append("contact", JSON.stringify(contactObj))
         axios
         .post(api + '/business', formDatas)
         .then(res => {
-            if(res.status === 201) {
-                returnHandler()
-            }
+            // if(res.status === 201) {
+            //     returnHandler()
+            // }
+            console.log(res)
         })
         .catch(err => console.log(err))
     }
@@ -129,6 +127,8 @@ export default function AddBusiness() {
                             <input id='contactName' placeholder='Name' />
                             <input id='contactPosition' placeholder='Position' />
                             <input id='contactNumber' type='tel' placeholder='Phone Number' />
+                            <input id='contactEmail' type='email' placeholder='Email' />
+                            <input id='contactWebsite' placeholder='Website' />
                         </div>
                     </div>
                 </form>

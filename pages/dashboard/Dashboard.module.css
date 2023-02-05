@@ -10,8 +10,7 @@
     width: 400px;
     border-radius: 10px;
 }
-.linkCard,
-.wikiCard {
+.card {
     position: relative;
     background-color: #fff;
     border-radius: 10px;
@@ -20,13 +19,11 @@
     height: 125px;
     width: 200px;
 }
-.linkCard span,
-.wikiCard span,
+.card span,
 .homeTitle {
     font-size: 25px;
 }
-.linkCard a,
-.wikiCard a {
+.card a {
     position: absolute;
     bottom: 10px;
     border-radius: 10px;
@@ -39,8 +36,7 @@
     color: #fff;
     background-color: black;
 }
-.linkCard a span,
-.wikiCard a span {
+.card a span {
     padding: 0 5px;
     font-size: 16px;
 }

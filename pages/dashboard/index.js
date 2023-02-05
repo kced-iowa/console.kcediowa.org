@@ -32,6 +32,12 @@ export default function Dashboard() {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
     
+    const links = [
+        {id: 0, title: 'Analytics', link: 'https://sadcmetrics.horsaen.com/'},
+        {id: 1, title: 'Wiki', link: 'https://sadcwiki.horsaen.com/'},
+        {id: 2, title: 'Live Site', link: 'https://sadc.horsaen.com/'}
+    ]
+
     return (
         <div>
             <Head>
@@ -44,20 +50,15 @@ export default function Dashboard() {
                         <span className={styles.homeTitle}>Welcome back,<br />{user.username}.</span>
                     </div>
                 </div>
-                <div className={styles.linkCard}>
-                    <span>Analytics</span>
-                    <a href="https://sadcmetrics.horsaen.com/" target="_blank" rel="noreferrer">
-                        <span>To Analytics</span>
-                        <span><BsBoxArrowUpRight /></span>
-                    </a>
-                </div>
-                <div className={styles.wikiCard}>
-                    <span>Wiki</span>
-                    <a href="https://sadcwiki.horsaen.com/" target="_blank" rel="noreferrer">
-                        <span>To Wiki</span>
-                        <span><BsBoxArrowUpRight /></span>
-                    </a>
-                </div>
+                {links.map((data) => (
+                    <div key={data.id} className={styles.card}>
+                        <span>{data.title}</span>
+                        <a href={data.link}>
+                            <span>To {data.title}</span>
+                            <span><BsBoxArrowUpRight /></span>
+                        </a>
+                    </div>
+                ))}
             </div>
         </div>
     );
