@@ -81,9 +81,8 @@ export default function AddMember () {
         axios
         .patch(api + '/members/' + id, formDatas)
         .then(res => {
-            if(res.status === 201) {
+            if(res.status === 200) {
                 returnHandler()
-                console.log(res)
             }
             console.log(res)
         })

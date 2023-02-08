@@ -136,7 +136,7 @@ export default function EditBusiness() {
                             <input type="text" id='address' defaultValue={data.address} placeholder="Address" />
                             <input type="url" id='website' defaultValue={data.website} placeholder="Website" />
                             <input type="text" id='facebook' defaultValue={data.facebook} placeholder="Facebook" />
-                            <input type="text" id='bio' defaultValue={data.bio} placeholder="About Business" />
+                            <textarea type="text" id='bio' defaultValue={data.bio} placeholder="About Business" />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
