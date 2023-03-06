@@ -11,8 +11,8 @@ export default function AddBusiness() {
     
     const api = process.env.NEXT_PUBLIC_APIBASE
     
-    const [imagePreview, setImagePreview] = useState(api + '/cdn/members/BlacK.jpg')
-    const [imagePreview2, setImagePreview2] = useState(api + '/cdn/members/BlacK.jpg')
+    const [imagePreview, setImagePreview] = useState(api + '/cdn/members/Black.jpg')
+    const [imagePreview2, setImagePreview2] = useState(api + '/cdn/members/Black.jpg')
     const [image, setImage] = useState('')
     const [image2, setImage2] = useState('')
 

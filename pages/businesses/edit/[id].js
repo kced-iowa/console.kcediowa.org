@@ -107,7 +107,7 @@ export default function EditBusiness() {
     return (
         <>
             <Head>
-                <title>Business | Add</title>
+                <title>{"Business | " + data.name}</title>
             </Head>
             <div className={styles.page}>
                 <form onSubmit={submitHandler} encType='multipart/form-data'>
@@ -115,14 +115,14 @@ export default function EditBusiness() {
                         <div className={styles.title}>
                             <div className={styles.bar} />
                                 <div className={styles.image}>
-                                    <Image alt='' src={imagePreview} height='200px' width='200px'/>
+                                    <Image alt='' src={imagePreview} height='200px' width='200px' />
                                     <div>
                                         <input type='file' onChange={onImageChange} accept='image/*' />
                                         <span>Cover Image</span>
                                     </div>
                                 </div>
                                 <div className={styles.image}>
-                                    <Image alt='' src={imagePreview2} height='200px' width='200px'/>
+                                    <Image alt='' src={imagePreview2} height='200px' width='200px' />
                                     <div>
                                         <input type='file' onChange={onImageChange2}/>
                                         <span>Main Image</span>

@@ -1,11 +1,18 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import Head from "next/head";
 import Navbar from '../../components/Navbar'
 
 export default function Visit(){
     return (
+        <>
+        <Head>
+            <title>Visit | SADC Console</title>
+        </Head>
+        <Navbar />
         <div>
-            <Navbar />
+            
         </div>
+        </>
     );
 };
 

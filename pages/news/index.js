@@ -1,12 +1,19 @@
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import Head from "next/head";
 import Navbar from '../../components/Navbar'
 
 export default function News(){
     return (
+        <>
+        <Head>
+            <title>News | SADC Console</title>
+        </Head>
+        <Navbar />
         <div>
-            <Navbar />
+
         </div>
+        </>
     );
 };
 
-export const getServerSideProps = withApiAuthRequired();
+export const getServerSideProps = withPageAuthRequired();

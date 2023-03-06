@@ -11,27 +11,13 @@ export default function AddMember (props) {
 
     const api = process.env.NEXT_PUBLIC_APIBASE
 
-    const [name, setName] = useState('')
-    const [occupation, setOccupation] = useState('')
-    const [paragraph, setParagraph] = useState('')
-    const [date, setDate] = useState('')
-
-    const handleName = ({target:{value}}) => setName(value)
-    const handleOccupation = ({target:{value}}) => setOccupation(value)
-    const handleParagraph = ({target:{value}}) => setParagraph(value)
-    const handleDate = ({target:{value}}) => setDate(value)
-
-    const [imagePreview, setImagePreview] = useState('')
+    const [imagePreview, setImagePreview] = useState(api + '/cdn/members/Black.jpg')
     const [img, setImg] = useState('')
-    const [imgName, setImgName] = useState('')
 
     const onImageChange = (e) => {
         setImagePreview(URL.createObjectURL(e.target.files[0]))
         setImg(e.target.files[0])
-        setImgName(e.target.files[0].name)
     }
-
-    const [loading, setLoading] = useState('')
 
     const returnHandler = () => {
         const url = '/members'
@@ -42,9 +28,9 @@ export default function AddMember (props) {
         e.preventDefault()
             const formDatas = new FormData()
             formDatas.append('name', name)
-            formDatas.append('occupation', occupation)
-            formDatas.append('bio', paragraph)
-            formDatas.append('join', date)
+            formDatas.append('occupation', e.target.occupation.value)
+            formDatas.append('bio', e.target.paragraph.value)
+            formDatas.append('join', e.target.date.value)
             formDatas.append('image', img)
         axios
         .post(api + '/members', formDatas)
@@ -70,11 +56,11 @@ export default function AddMember (props) {
                     </div>
                     <div className={styles.inputs}>
                         <div>
-                            <input value={name} placeholder="Name" onChange={handleName} />
-                            <input value={occupation} placeholder="Occupation" onChange={handleOccupation} />
-                            <input value={date} placeholder="Member Since" onChange={handleDate} />
+                            <input id="name" placeholder="Name" />
+                            <input id="occupation" placeholder="Occupation" />
+                            <input id="date" placeholder="Member Since" />
                         </div>
-                        <textarea value={paragraph} placeholder="Paragraph" onChange={handleParagraph} />
+                        <textarea id="paragraph" placeholder="Paragraph" />
                     </div>
                     <div className={styles.buttons}>
                         <button type="submit">Add</button>

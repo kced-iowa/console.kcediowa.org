@@ -125,7 +125,7 @@ export default function AddMember () {
                     <form onSubmit={submitHandle} encType="multipart/form-data">
                         <div className={styles.title}>
                             <div className={styles.bar}/>
-                            <div className={styles.image}><Image alt='' src={imagePreview} layout='fill'/></div>
+                            <div className={styles.image}><Image alt='' src={imagePreview} layout='fill' /></div>
                             <input type="file" onChange={onImageChange}></input>
                         </div>
                         <div className={styles.inputs}>

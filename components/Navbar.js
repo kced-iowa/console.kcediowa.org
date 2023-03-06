@@ -1,4 +1,4 @@
-import { useUser } from '@auth0/nextjs-auth0';
+import { handleLogout, useUser } from '@auth0/nextjs-auth0';
 import Link from 'next/link';
 import styles from './Navbar.module.css';
 import { CgProfile } from 'react-icons/cg';
@@ -35,6 +35,17 @@ const buttons = [
     }
 ];
 
+
+// construct our own because auth0's won't work (womp womp)
+const logout = () => {
+    var logoutUrl = '/api/auth/logout'
+    // so 2012 but idc
+    const check = confirm("Are you sure you want to log out?")
+    if (check == 1) {
+        window.location = logoutUrl
+    } else {}
+}
+
 export default function Navbar(){
     const { user, error, isLoading } = useUser();
     // i don't know why auth0 needs this, but it won't run without it...
@@ -52,12 +63,10 @@ export default function Navbar(){
                     </Link>
                 ))}
                 <div className={styles.account}>
-                    <Link href='/api/auth/logout'>
-                        <a>
-                            <CgProfile className={styles.space} />
-                            <span>{user.username}</span>
-                        </a>
-                    </Link>
+                    <a onClick={logout}>
+                        <CgProfile className={styles.space} />
+                        <span>{user.username}</span>
+                    </a>
                 </div>
             </div>
     )
