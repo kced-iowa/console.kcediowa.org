@@ -37,6 +37,7 @@ const buttons = [
 
 
 // construct our own because auth0's won't work (womp womp)
+// also: make own confirmation object to look better ?? not needed now
 const logout = () => {
     var logoutUrl = '/api/auth/logout'
     // so 2012 but idc
