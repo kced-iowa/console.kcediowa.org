@@ -21,6 +21,9 @@
     padding-left: 5rem;
     margin: 50px;
 }
+.container textarea {
+    resize: none;
+}
 .eventCard,
 .addCard {
     margin: 0 10px;
@@ -70,10 +73,13 @@
 .dateContainer input {
     text-align: center;
 }
-.dateContainer input:nth-child(1) {
+.day {
     width: 60px;
     font-size: 50px;
     text-align: center;
+}
+.timeContainer input{
+    width: 60px;
 }
 .detailContainer {
     display: flex;
@@ -86,8 +92,13 @@
     display: flex;
     justify-content: center;
 }
+.addButton {
+    position: absolute;
+    right: 45px;
+    bottom: 45px;
+}
 .addButton span {
     cursor: pointer;
-    color: #fff;
-    font-size: 25px;
+    color: #c7dde8;
+    font-size: 40px;
 }

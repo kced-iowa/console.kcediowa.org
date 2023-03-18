@@ -5,30 +5,74 @@ import Link from "next/link";
 import Navbar from '../../components/Navbar'
 import axios from 'axios'
 import styles from './Events.module.css'
+import EventCard from './EventCard'
 
-import { AiFillDelete } from 'react-icons/ai'
-import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { BiMessageSquareAdd } from 'react-icons/bi'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
 
 export default function Events(){
 
+    const api = process.env.NEXT_PUBLIC_APIBASE
+
+    const [data, setData] = useState([])
     const [addHandler, setAddAppend] = useState(false)
-    const addCard = () => {
-        setAddAppend(true)
+
+    const fetchEvents = () => {
+        axios
+        .get(api + '/events')
+        .then((res) => {
+            setData(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
+    
     const removeAddCard = () => {
         setAddAppend(false)
     }
+    
+    useEffect(() => {
+        fetchEvents()
+    }, [setData, removeAddCard])
+    
+    const addCard = () => {
+        setAddAppend(true)
+    }
 
-    const [isChanged, setIsChanged] = useState(false)
-    const changedHandler = () => {
-        setIsChanged(true)
+    const newCardAdded = (e) => {
+        e.preventDefault()
+        const newEvent = {
+            title: e.target.newTitle.value,
+            dd: e.target.newDay.value,
+            mm: e.target.newMonth.value,
+            timestart: e.target.newTimestart.value,
+            timeend: e.target.newTimeend.value,
+            desc: e.target.newAbout.value,
+            address: e.target.newAddress.value,
+            rsvp: e.target.newRsvp.value
+        }
+        axios
+        .post(api + '/events', newEvent)
+        .then(res => {
+            if(res.status == 201) {
+                removeAddCard()
+            }
+            console.log(res)
+        })
+        .catch(err => console.log(err))
     }
-    const savedHandler = () => {
-        setIsChanged(false)
-    }
+
+
+    // const [isChanged, setIsChanged] = useState(false)
+    // const changedHandler = () => {
+    //     setIsChanged(true)
+    // }
+    // const savedHandler = () => {
+    //     setIsChanged(false)
+    // }
+
     return (
         <>
             <Head>
@@ -47,41 +91,56 @@ export default function Events(){
                 <div className={styles.container}>
                     {addHandler == true ? 
                         <div className={styles.addCard}>
-                            <span onClick={removeAddCard}>hi</span>
+                            <form onSubmit={newCardAdded}>
+                            <div className={styles.delButton}>
+                                <button onClick={
+                                    function cancelAdd () {
+                                        const check = confirm("Are you sure you want to cancel?")
+                                        if (check == true) {
+                                            removeAddCard()
+                                        } else {}
+                                    }
+                                }>X</button>
+                            </div>
+                            <div className={styles.cardTitle}>
+                                <textarea id="newTitle" placeholder={"Event title"}></textarea>
+                            </div>
+                            <div className={styles.dateContainer}>
+                                <input id="newDay" className={styles.day} type="text" maxLength={2} placeholder={"00"}></input>
+                                <input id="newMonth" type="text" maxLength={4} placeholder={"MONTH"}></input>
+                                <div className={styles.timeContainer}>
+                                    <input id="newTimestart" placeholder={"0:00AM"}></input>
+                                    <span> - </span>
+                                    <input id="newTimeend" placeholder={"0:00PM"}></input>
+                                </div>
+                            </div>
+                            <div className={styles.detailContainer}>
+                                <textarea id="newAbout" placeholder={"About event"}></textarea>
+                                <div>
+                                    <span><FaMapMarkerAlt /></span>
+                                    <input id="newAddress" placeholder={"Event location"}></input>
+                                </div>
+                            </div>
+                            <div className={styles.forms}>
+                                <input id="newRsvp" type="url" placeholder={"RSVP / form link"}></input>
+                                <button type="submit">SAVE</button>
+                            </div>
+                            </form>
                         </div>
                     : null }
-                    <div className={styles.eventCard}>
-                        <div className={styles.delButton}>
-                            <button onClick={()=>{confirm("Are you sure you want to delete this event?")}}><AiFillDelete /></button>
-                        </div>
-                        <div className={styles.cardTitle}>
-                            <textarea defaultValue={"Farmer's Markeasffffffffasd fasd fsadf asdft"} onChange={changedHandler}></textarea>
-                        </div>
-                        <div className={styles.dateContainer}>
-                            <input type="text" maxLength={2} defaultValue={"24"} onChange={changedHandler}></input>
-                            <input type="text" maxLength={4} defaultValue={"SEPT"} onChange={changedHandler}></input>
-                            {/* <div>
-                                <input defaultValue={"9:20AM"}></input>
-                                <span> - </span>
-                                <input defaultValue={"8:35PM"}></input>
-                            </div> */}
-                        </div>
-                        <div className={styles.detailContainer}>
-                            <textarea defaultValue={"Buy fresh vegetables at the farmers market"} onChange={changedHandler}></textarea>
-                            <div>
-                                <span><FaMapMarkerAlt /></span>
-                                <input defaultValue={"15999 200th avenue"} onChange={changedHandler}></input>
-                            </div>
-                        </div>
-                        {isChanged == true ? <span>true</span> : <span>false</span>}
-                        <div className={styles.forms}>
-                            <a rel="noreferrer" target="_blank" href="https://google.com">
-                                <button><BsBoxArrowUpRight /></button>
-                            </a>
-                            <input defaultValue={"https://google.com"} onChange={changedHandler}></input>
-                        </div>
-                        <span onClick={savedHandler}>vlickcle</span>
-                    </div>
+                    {data.map((event) =>
+                        <EventCard
+                            _id={event._id}
+                            title={event.title}
+                            dd={event.dd}
+                            mm={event.mm}
+                            timestart={event.timestart}
+                            timeend={event.timeend}
+                            desc={event.desc}
+                            address={event.address}
+                            rsvp={event.rsvp}
+                        />
+                    )}
                 </div>
                 <div className={styles.addButton}>
                     <span onClick={addCard}><BiMessageSquareAdd /></span>
