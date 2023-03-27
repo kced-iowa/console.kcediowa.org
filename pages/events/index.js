@@ -1,46 +1,111 @@
+// !! NEEDS CLEANING !!
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, useCallback } from 'react'
 import Head from "next/head";
 import Link from "next/link";
 import Navbar from '../../components/Navbar'
 import axios from 'axios'
+import useSWR, {mutate} from 'swr'
+// this especially needs to be cleaned up
 import styles from './Events.module.css'
-import EventCard from './EventCard'
 
+import { AiFillDelete } from 'react-icons/ai'
 import { BiMessageSquareAdd } from 'react-icons/bi'
+import { BsBoxArrowUpRight } from 'react-icons/bs'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
 
+const api = process.env.NEXT_PUBLIC_APIBASE
+
+const fetcher = url => axios.get(url).then(res => res.data)
+var key = api + '/events'
+
+function Event(props){
+    const [changed, setChanged] = useState(false)
+    const changedCheck = () => {
+        setChanged(true)
+    }
+    const savedHandler = () => {
+        setChanged(false)
+    }
+    return (
+        <div className={styles.eventCard}>
+            <form onSubmit={
+                function editEvent (e) {
+                    e.preventDefault()
+                    const editEvent = {
+                        title: e.target.newTitle.value,
+                        dd: e.target.newDay.value,
+                        mm: e.target.newMonth.value,
+                        timestart: e.target.newTimestart.value,
+                        timeend: e.target.newTimeend.value,
+                        desc: e.target.newAbout.value,
+                        address: e.target.newAddress.value,
+                        rsvp: e.target.newRsvp.value
+                    }
+                    axios
+                    .patch(api + '/events/' + props._id, editEvent)
+                    .then(res => {
+                        if(res.status == 201) {
+                            savedHandler()
+                        }
+                    })
+                    .catch(err => console.log(err))
+                }
+            }>
+                <div className={styles.delButton}>
+                    <button onClick={
+                        function delEvent (e) {
+                            e.preventDefault()
+                            const check = confirm('Do you want to delete this event?')
+                            if (check == true) {
+                                axios
+                                .delete(api + '/events/' + props._id)
+                                .then((res)=> {
+                                    if (res.status == 200) {
+                                        mutate(key)
+                                    }
+                                })
+                            } else {}
+                        }
+                        }><AiFillDelete /></button>
+                </div>
+                <div className={styles.cardTitle}>
+                    <textarea id="newTitle" defaultValue={props.title} onChange={changedCheck}></textarea>
+                </div>
+                <div className={styles.dateContainer}>
+                    <input id="newDay" className={styles.day} type="text" maxLength={2} defaultValue={props.dd} onChange={changedCheck}></input>
+                    <input id="newMonth" type="text" maxLength={4} defaultValue={props.mm} onChange={changedCheck}></input>
+                    <div className={styles.timeContainer}>
+                        <input id="newTimestart" defaultValue={props.timestart} onChange={changedCheck}></input>
+                        <span> - </span>
+                        <input id="newTimeend" defaultValue={props.timeend} onChange={changedCheck}></input>
+                    </div>
+                </div>
+                <div className={styles.detailContainer}>
+                    <textarea id="newAbout" defaultValue={props.desc} onChange={changedCheck}></textarea>
+                    <div>
+                        <span><FaMapMarkerAlt /></span>
+                        <input id="newAddress" defaultValue={props.address} onChange={changedCheck}></input>
+                    </div>
+                </div>
+                <div className={styles.forms}>
+                    <a rel="noreferrer" target="_blank" href={props.rsvp}>
+                        <BsBoxArrowUpRight />
+                    </a>
+                    <input id="newRsvp" defaultValue={props.rsvp} onChange={changedCheck}></input>
+                    {changed == true ? <button>Save</button> : null}
+                </div>
+            </form>
+        </div> 
+    )
+}
+
 export default function Events(){
 
-    const api = process.env.NEXT_PUBLIC_APIBASE
+    const {data, error} = useSWR(key, fetcher)
 
-    const [data, setData] = useState([])
-    const [addHandler, setAddAppend] = useState(false)
-
-    const fetchEvents = () => {
-        axios
-        .get(api + '/events')
-        .then((res) => {
-            setData(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
-    
-    const removeAddCard = () => {
-        setAddAppend(false)
-    }
-    
-    useEffect(() => {
-        fetchEvents()
-    }, [setData, removeAddCard])
-    
-    const addCard = () => {
-        setAddAppend(true)
-    }
-
+    const [addHandler, setAddHandler] = useState(false)
     const newCardAdded = (e) => {
         e.preventDefault()
         const newEvent = {
@@ -55,23 +120,14 @@ export default function Events(){
         }
         axios
         .post(api + '/events', newEvent)
-        .then(res => {
+        .then((res)=> {
             if(res.status == 201) {
-                removeAddCard()
+                setAddHandler(false)
+                mutate(key)
             }
-            console.log(res)
         })
         .catch(err => console.log(err))
     }
-
-
-    // const [isChanged, setIsChanged] = useState(false)
-    // const changedHandler = () => {
-    //     setIsChanged(true)
-    // }
-    // const savedHandler = () => {
-    //     setIsChanged(false)
-    // }
 
     return (
         <>
@@ -93,12 +149,12 @@ export default function Events(){
                         <div className={styles.addCard}>
                             <form onSubmit={newCardAdded}>
                             <div className={styles.delButton}>
-                                <button onClick={
+                                <button type="button" onClick={
                                     function cancelAdd () {
                                         const check = confirm("Are you sure you want to cancel?")
                                         if (check == true) {
-                                            removeAddCard()
-                                        } else {}
+                                            setAddHandler(false)
+                                        }
                                     }
                                 }>X</button>
                             </div>
@@ -128,8 +184,8 @@ export default function Events(){
                             </form>
                         </div>
                     : null }
-                    {data.map((event) =>
-                        <EventCard
+                    {data && data.map((event)=> (
+                        <Event
                             _id={event._id}
                             title={event.title}
                             dd={event.dd}
@@ -140,10 +196,10 @@ export default function Events(){
                             address={event.address}
                             rsvp={event.rsvp}
                         />
-                    )}
+                    ))}
                 </div>
                 <div className={styles.addButton}>
-                    <span onClick={addCard}><BiMessageSquareAdd /></span>
+                    <span onClick={()=>setAddHandler(true)}><BiMessageSquareAdd /></span>
                 </div>
             </div>
         </>
