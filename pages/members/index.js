@@ -2,6 +2,7 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import Head from 'next/head'
 import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar'
+import useSWR, {mutate} from 'swr'
 import axios from 'axios'
 import styles from './Members.module.css'
 
@@ -9,25 +10,13 @@ import { AiOutlineUserAdd } from 'react-icons/ai'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 
+const api = process.env.NEXT_PUBLIC_APIBASE
+
+const fetcher = url => axios.get(url).then(res => res.data)
+const key = api + '/members'
+
 export default function Members() {
-    const [members, setMembers] = useState([])
-
-    const api = process.env.NEXT_PUBLIC_APIBASE
-
-    useEffect(() => {
-        const fetchMembers = () => {
-            axios
-            .get(api + '/members')
-            .then((res) => {
-                setMembers(res.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        }
-        fetchMembers()
-    })
-    
+    const { data, error } = useSWR(key, fetcher)
     return (
         <div>
             <Head>
@@ -40,7 +29,7 @@ export default function Members() {
                 </div>
                 <div className={styles.memberContainer}>
                     <div className={styles.memberList}>
-                        {members.map((member) => (
+                        {data && data.map((member) => (
                             <div key={member._id} className={styles.member}>
                                 <p>{member.name}</p>
                                 <div>
@@ -56,7 +45,11 @@ export default function Members() {
                                                 if (check == true) {
                                                     axios
                                                     .delete(api + '/members/' + member._id)
-                                                    .then(res => res.json())
+                                                    .then((res) => {
+                                                        if (res.status == 200) {
+                                                            mutate(key)
+                                                        }
+                                                    })
                                                     .catch(err => console.log(err))
                                                 } else {}
                                         }

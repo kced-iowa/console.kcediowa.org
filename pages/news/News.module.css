@@ -1,0 +1,75 @@
+.title {
+    font-size: 60px;
+    color: #c7dde8;
+    padding-bottom: 3rem;
+    padding-left: 5rem;
+    padding-top: 3rem;
+}
+.title,
+.title span {
+    display: flex;
+    align-items: center;
+}
+.title span:nth-child(2) {
+    cursor: pointer;
+    font-size: 45px;
+    margin-left: 30px;
+}
+.title input {
+    margin-left: 300px;
+}
+.container {
+    display: flex;
+    position: relative;
+    padding-left: 5rem;
+    margin: 50px;
+}
+.card {
+    margin: 0 10px;
+    position: relative;
+    height: 400px;
+    width: 275px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+}
+.delButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+}
+.delButton button {
+    all: unset;
+    cursor: pointer;
+    border-radius: 90px;
+    border: 2px solid #000;
+    position: absolute;
+    background-color: red;
+    top: -10px;
+    right: -10px;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card div {
+    position: absolute;
+    bottom: 10px;
+}
+.card form textarea {
+    resize: none;
+    height: 100px;
+}
+.addButton {
+    position: absolute;
+    right: 45px;
+    bottom: 45px;
+}
+.addButton span {
+    cursor: pointer;
+    color: #c7dde8;
+    font-size: 40px;
+}

@@ -1,8 +1,9 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import axios from "axios";
 import { useState, useEffect } from 'react'
 import Head from "next/head";
 import Navbar from '../../components/Navbar'
+import useSWR, {mutate} from 'swr'
+import axios from 'axios'
 import styles from './Businesses.module.css'
 
 import { BiEdit } from 'react-icons/bi'
@@ -10,22 +11,11 @@ import { MdDelete, MdOutlineAdd } from 'react-icons/md'
 
 const api = process.env.NEXT_PUBLIC_APIBASE
 
+const fetcher = url => axios.get(url).then(res => res.data)
+const key = api + '/business'
+
 export default function Businesses(){
-    const [businesses, setBusinesses] = useState([])
-    useEffect(() => {
-        const fetchBusinesses = () => {
-            axios
-            .get(api + '/business')
-            .then((res) => {
-                setBusinesses(res.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        }
-        fetchBusinesses()
-    })
-    
+    const { data, error } = useSWR(key, fetcher)
     return (
         <div>
             <Head>
@@ -38,7 +28,7 @@ export default function Businesses(){
                 </div>
                 <div className={styles.businessContainer}>
                     <div className={styles.businessList}>
-                        {businesses.map((business) => (
+                        {data && data.map((business) => (
                             <div key={business._id} className={styles.business}>
                                 <p>{business.name}</p>
                                 <div>
@@ -54,7 +44,11 @@ export default function Businesses(){
                                                 if (check == true) {
                                                     axios
                                                     .delete(api + '/business/' + business._id)
-                                                    .then(res => console.log(res))
+                                                    .then((res)=> {
+                                                        if (res.status == 200) {
+                                                            mutate(key)
+                                                        }
+                                                    })
                                                     .catch(err => console.log(err))
                                                 } else {}
                                         }

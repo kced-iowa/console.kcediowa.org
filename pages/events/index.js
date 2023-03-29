@@ -22,12 +22,6 @@ var key = api + '/events'
 
 function Event(props){
     const [changed, setChanged] = useState(false)
-    const changedCheck = () => {
-        setChanged(true)
-    }
-    const savedHandler = () => {
-        setChanged(false)
-    }
     return (
         <div className={styles.eventCard}>
             <form onSubmit={
@@ -47,7 +41,8 @@ function Event(props){
                     .patch(api + '/events/' + props._id, editEvent)
                     .then(res => {
                         if(res.status == 201) {
-                            savedHandler()
+                            setChanged(false)
+                            mutate(key)
                         }
                     })
                     .catch(err => console.log(err))
@@ -71,29 +66,29 @@ function Event(props){
                         }><AiFillDelete /></button>
                 </div>
                 <div className={styles.cardTitle}>
-                    <textarea id="newTitle" defaultValue={props.title} onChange={changedCheck}></textarea>
+                    <textarea id="newTitle" defaultValue={props.title} onChange={()=>setChanged(true)}></textarea>
                 </div>
                 <div className={styles.dateContainer}>
-                    <input id="newDay" className={styles.day} type="text" maxLength={2} defaultValue={props.dd} onChange={changedCheck}></input>
-                    <input id="newMonth" type="text" maxLength={4} defaultValue={props.mm} onChange={changedCheck}></input>
+                    <input id="newDay" className={styles.day} type="text" maxLength={2} defaultValue={props.dd} onChange={()=>setChanged(true)}></input>
+                    <input id="newMonth" type="text" maxLength={4} defaultValue={props.mm} onChange={()=>setChanged(true)}></input>
                     <div className={styles.timeContainer}>
-                        <input id="newTimestart" defaultValue={props.timestart} onChange={changedCheck}></input>
+                        <input id="newTimestart" defaultValue={props.timestart} onChange={()=>setChanged(true)}></input>
                         <span> - </span>
-                        <input id="newTimeend" defaultValue={props.timeend} onChange={changedCheck}></input>
+                        <input id="newTimeend" defaultValue={props.timeend} onChange={()=>setChanged(true)}></input>
                     </div>
                 </div>
                 <div className={styles.detailContainer}>
-                    <textarea id="newAbout" defaultValue={props.desc} onChange={changedCheck}></textarea>
+                    <textarea id="newAbout" defaultValue={props.desc} onChange={()=>setChanged(true)}></textarea>
                     <div>
                         <span><FaMapMarkerAlt /></span>
-                        <input id="newAddress" defaultValue={props.address} onChange={changedCheck}></input>
+                        <input id="newAddress" defaultValue={props.address} onChange={()=>setChanged(true)}></input>
                     </div>
                 </div>
                 <div className={styles.forms}>
                     <a rel="noreferrer" target="_blank" href={props.rsvp}>
                         <BsBoxArrowUpRight />
                     </a>
-                    <input id="newRsvp" defaultValue={props.rsvp} onChange={changedCheck}></input>
+                    <input id="newRsvp" defaultValue={props.rsvp} onChange={()=>setChanged(true)}></input>
                     {changed == true ? <button>Save</button> : null}
                 </div>
             </form>
