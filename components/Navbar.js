@@ -26,12 +26,12 @@ const buttons = [
         link: "news"
     },
     {
-        title: "Clubs & Organizations",
-        link: "orgs"
+        title: "Live here",
+        link: "townships"
     },
     {
-        title: "Visit",
-        link: "visit"
+        title: "Play here",
+        link: "recreation"
     }
 ];
 

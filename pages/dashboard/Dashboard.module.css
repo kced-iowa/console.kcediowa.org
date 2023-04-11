@@ -2,13 +2,19 @@
     margin: 30px;
     display: flex;
 }
-.homeCard {
+.homeCard,
+.backgroundContainer {
     background-color: #fff;
     padding: 10px;
     margin: 10px;
-    height: 125px;
     width: 400px;
     border-radius: 10px;
+}
+.homeCard {
+    height: 125px;
+}
+.backgroundContainer {
+    height: 270px;
 }
 .card {
     position: relative;
@@ -20,8 +26,32 @@
     width: 200px;
 }
 .card span,
-.homeTitle {
+.homeTitle,
+.backgroundContainer {
     font-size: 25px;
+}
+.imageContainer {
+    padding-top: 10px;
+}
+.imageSelectCont {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.imageSelect {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+.imageSelect div {
+    display: flex;
+    flex-direction: column;
+}
+.imageSelect div input {
+    display: none;
+}
+.imageSelect div label span {
+    cursor: pointer;
 }
 .card a {
     position: absolute;
