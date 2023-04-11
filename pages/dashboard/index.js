@@ -2,30 +2,51 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
+import useSWR, {mutate} from 'swr'
 import axios from 'axios';
 import styles from './Dashboard.module.css';
 
-import { BsBoxArrowUpRight } from 'react-icons/bs';
+import { BiEditAlt } from 'react-icons/bi'
+import { BsBoxArrowUpRight } from 'react-icons/bs'
 
-const api = process.env.API_BASE
+const api = process.env.NEXT_PUBLIC_APIBASE
+
+const fetcher = url => axios.get(url).then(res => res.data)
+var key = api + '/backgrounds'
+
+function ImageSelect (props) {
+    return (
+        <div className={styles.imageSelect}>
+            <Image src={props.source} width={440} height={248} />
+            <div>
+                <input id={props.id} type="file" onChange={(e) => {
+                    const formDatas = new FormData()
+                        formDatas.append('file', e.target.files[0])
+                    // axios if dumb and doesn't want to use PATH w/ formData so i will use fetch, yay!
+                    fetch(api + '/backgrounds/' + props.id, {
+                        method: 'PATCH',
+                        body: formDatas
+                    })
+                    .then((res) => {
+                        if (res.status == 200) {
+                            mutate(key)
+                        }
+                    })
+                }}/>
+                <label htmlFor={props.id}>
+                    <span><BiEditAlt /></span>
+                </label>
+            </div>
+        </div>
+    )
+}
 
 export default function Dashboard() {
-    const [members, setMembers] = useState([])
-    useEffect(() => {
-        fetchMembers()
-    }, [])
-    const fetchMembers = () => {
-        axios
-        .get(api + '/members')
-        .then((res) => {
-            setMembers(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
+
+    const {data} = useSWR(key, fetcher)
 
     const { user, error, isLoading } = useUser();
     // i don't know why auth0 needs this, but it won't run without it...
@@ -48,6 +69,19 @@ export default function Dashboard() {
                 <div>
                     <div className={styles.homeCard}>
                         <span className={styles.homeTitle}>Welcome back,<br />{user.username}.</span>
+                    </div>
+                    <div className={styles.backgroundContainer}>
+                        <span>Home Background</span>
+                        <div className={styles.imageContainer}>
+                            <div className={styles.imageSelectCont}>
+                                {data && data.map((image) => (
+                                    <ImageSelect
+                                        id={image._id}
+                                        source={api + '/cdn/backgrounds/' + image.file}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {links.map((data) => (
