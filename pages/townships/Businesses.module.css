@@ -1,0 +1,59 @@
+.page {
+    overflow-x: hidden;
+}
+.title {
+    font-size: 60px;
+    color: #c7dde8;
+    padding-bottom: 3rem;
+    padding-left: 5rem;
+    padding-top: 3rem;
+}
+.businessContainer {
+    position: relative;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.businessList {
+    position: relative;
+    border-radius: 10px;
+    background-color: #fff;
+    overflow: scroll;
+    scrollbar-width: none;
+    overflow-x: hidden;
+    height: 600px;
+    width: 1000px;
+    padding: 15px;
+}
+.business {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 40px;
+    font-size: 20px;
+}
+.business div {
+    position: absolute;
+    right: 0;
+}
+.business div button {
+    all: unset;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.addMember {
+    cursor: pointer;
+    position: sticky;
+    bottom: 0;
+    float: right;
+    background-color: black;
+    height: 60px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 30px;
+}
