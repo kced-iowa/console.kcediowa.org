@@ -9,7 +9,7 @@ import useSWR, {mutate} from 'swr'
 import axios from 'axios';
 import styles from './Dashboard.module.css';
 
-import { BiEditAlt } from 'react-icons/bi'
+import { BiEditAlt, BiUpload } from 'react-icons/bi'
 import { BsBoxArrowUpRight } from 'react-icons/bs'
 
 const api = process.env.NEXT_PUBLIC_APIBASE
@@ -80,6 +80,24 @@ export default function Dashboard() {
                                         source={api + '/cdn/backgrounds/' + image.file}
                                     />
                                 ))}
+                                {data[0] == undefined ?
+                                    <div className={styles.imageUpload}>
+                                        <input id="uploadImage" type="file" onChange={(e)=> {
+                                            const formData = new FormData()
+                                                formData.append('file', e.target.files[0])
+                                            axios
+                                            .post(api + '/backgrounds', formData)
+                                            .then((res) => {
+                                                if (res.status == 201) {
+                                                    mutate(key)
+                                                }
+                                            })
+                                        }} />
+                                        <label htmlFor='uploadImage'>
+                                            <span><BiUpload /></span>
+                                        </label>
+                                    </div>
+                                : null }
                             </div>
                         </div>
                     </div>

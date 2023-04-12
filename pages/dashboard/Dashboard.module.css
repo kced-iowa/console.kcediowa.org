@@ -53,6 +53,16 @@
 .imageSelect div label span {
     cursor: pointer;
 }
+.imageUpload {
+    padding-top: 20px;
+}
+.imageUpload input {
+    display: none;
+}
+.imageUpload label {
+    cursor: pointer;
+    font-size: 30px;
+}
 .card a {
     position: absolute;
     bottom: 10px;
