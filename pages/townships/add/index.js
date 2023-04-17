@@ -7,17 +7,17 @@ import Image from 'next/image'
 import axios from 'axios'
 import styles from './Add.module.css'
 
-function SocialInputs (props) {
+function SocialInputs () {
     const [socialType, setSocialType] = useState('')
     return (
-        <>
-        <select onChange={(e)=>setSocialType(e.target.value)}>
+        <div className={styles.socialCont}>
+        <select onChange={(e)=>setSocialType(e.target.value)} className={styles.selectSocial}>
             <option value="">asdfasdfasdf</option>
             <option value="test1">test1</option>
             <option value="test2">test2</option>
         </select>
-        <span>{socialType}</span>
-        </>
+        <input placeholder={socialType} />
+        </div>
     )
 }
 
@@ -94,8 +94,8 @@ export default function AddBusiness() {
                             <input type="text" id='name' placeholder="Town Name" />
                             <input type="link" id='link' placeholder="Town Link" />
                             <input type="text" id='address' placeholder="Town Address (Just town name)" />
-                            <textarea id="bio" placeholder="About" />
                             <SocialInputs />
+                            <textarea id="bio" placeholder="About" />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
