@@ -62,7 +62,7 @@ export default function Dashboard() {
     return (
         <div>
             <Head>
-                <title>Dashboard | SADC Console</title>
+                <title>Dashboard | KCED Console</title>
             </Head>
             <Navbar />
             <div className={styles.container}>

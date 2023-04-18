@@ -83,7 +83,7 @@ export default function News(){
     return (
         <>
         <Head>
-            <title>News | SADC Console</title>
+            <title>News | KCED Console</title>
         </Head>
         <Navbar />
         <div>

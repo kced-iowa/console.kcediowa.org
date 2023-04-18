@@ -21,7 +21,7 @@ export default function Townships(){
     return (
         <div>
             <Head>
-                <title>Townships | SADC Console</title>
+                <title>Townships | KCED Console</title>
             </Head>
             <Navbar />
             <div className={styles.page}>

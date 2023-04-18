@@ -19,7 +19,7 @@ export default function Businesses(){
     return (
         <div>
             <Head>
-                <title>Businesses | SADC Console</title>
+                <title>Businesses | KCED Console</title>
             </Head>
             <Navbar />
             <div className={styles.page}>

@@ -127,7 +127,7 @@ export default function Events(){
     return (
         <>
             <Head>
-                <title>Events | SADC Console</title>
+                <title>Events | KCED Console</title>
             </Head>
             <Navbar />
             <div>

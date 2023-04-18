@@ -20,7 +20,7 @@ export default function Members() {
     return (
         <div>
             <Head>
-                <title>Members | SADC Console</title>
+                <title>Members | KCED Console</title>
             </Head>
             <Navbar />
             <div className={styles.page}>
