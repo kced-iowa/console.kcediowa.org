@@ -4,7 +4,7 @@ import Head from "next/head";
 import Navbar from '../../components/Navbar'
 import useSWR, {mutate} from 'swr'
 import axios from 'axios'
-import styles from './Townships.module.css'
+import styles from './Recreation.module.css'
 
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete, MdOutlineAdd } from 'react-icons/md'
@@ -12,40 +12,40 @@ import { MdDelete, MdOutlineAdd } from 'react-icons/md'
 const api = process.env.NEXT_PUBLIC_APIBASE
 
 const fetcher = url => axios.get(url).then(res => res.data)
-const key = api + '/townships'
+const key = api + '/recreation/'
 
-export default function Townships(){
+export default function Recreation(){
     
     const { data, error } = useSWR(key, fetcher)
 
     return (
         <div>
             <Head>
-                <title>Townships | KCED Console</title>
+                <title>Recreation | KCED Console</title>
             </Head>
             <Navbar />
             <div className={styles.page}>
                 <div className={styles.title}>
-                    <span>Townships</span>
+                    <span>Recreation</span>
                 </div>
-                <div className={styles.townshipContainer}>
-                    <div className={styles.townshipList}>
-                        {data && data.map((township) => (
-                            <div key={township._id} className={styles.township}>
-                                <p>{township.name}</p>
+                <div className={styles.recreationContainer}>
+                    <div className={styles.recreationList}>
+                        {data && data.map((recreation) => (
+                            <div key={recreation._id} className={styles.recreation}>
+                                <p>{recreation.name}</p>
                                 <div>
                                     <button className={styles.edit} onClick={
                                             function editMember () {
-                                                var url = '/townships/edit/' + township._id
+                                                var url = '/recreation/edit/' + recreation._id
                                                 window.location = url
                                             }
                                         }><BiEdit /></button>
                                     <button className={styles.delete} onClick={
                                         function deleteMember () {
-                                            const check = confirm('Do you want to delete this township?')
+                                            const check = confirm('Do you want to delete this recreation?')
                                                 if (check == true) {
                                                     axios
-                                                    .delete(api + '/townships/' + township._id)
+                                                    .delete(api + '/recreation/' + recreation._id)
                                                     .then((res)=> {
                                                         if (res.status == 200) {
                                                             mutate(key)
@@ -60,7 +60,7 @@ export default function Townships(){
                         ))}
                         <div className={styles.addMember} onClick={
                             function addMember() {
-                                var url = '/townships/add'
+                                var url = '/recreation/add'
                                 window.location = url
                             }
                         }><MdOutlineAdd /></div>

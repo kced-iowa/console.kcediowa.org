@@ -63,7 +63,7 @@
 .inputs textarea {
     display: block;
     resize: none;
-    height: 200px;
+    height: 100px;
 }
 .socialCont {
     display: flex;

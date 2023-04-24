@@ -39,21 +39,22 @@ export default function AddBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-            const balls = [
-                {type: e.target.social1type.value, user: e.target.social1.value},
-                {type: e.target.social2type.value, user: e.target.social2.value},
-                {type: e.target.social3type.value, user: e.target.social3.value}
-            ]
-            const formDatas = new FormData();
+        const balls = [
+            {type: e.target.social1type.value, user: e.target.social1.value},
+            {type: e.target.social2type.value, user: e.target.social2.value},
+            {type: e.target.social3type.value, user: e.target.social3.value}
+        ]
+        const formDatas = new FormData();
             formDatas.append('coverImg', image)
             formDatas.append('mainImg', image2)
             formDatas.append('name', e.target.name.value)
             formDatas.append('url', e.target.link.value)
-            formDatas.append('about', e.target.bio.value)
+            formDatas.append('history', e.target.history.value)
+            formDatas.append('activities', e.target.activities.value)
             formDatas.append('mapsAddress', e.target.address.value)
             formDatas.append('socials', JSON.stringify(balls))
         axios
-        .post(api + '/townships', formDatas)
+        .post(api + '/recreation', formDatas)
         .then(res => {
             if(res.status === 201) {
                 returnHandler()
@@ -62,13 +63,13 @@ export default function AddBusiness() {
         .catch(err => console.log(err))
     }
     const returnHandler = () => {
-        const url = '/townships'
+        const url = '/recreation'
         window.location = url
     }
     return (
         <>
             <Head>
-                <title>Townships | Add</title>
+                <title>Recreation | Add</title>
             </Head>
             <div className={styles.page}>
                 <form onSubmit={submitHandler} encType='multipart/form-data'>
@@ -92,12 +93,12 @@ export default function AddBusiness() {
                         </div>
                         <div className={styles.inputs}>
                             <div>
-                                <input type="text" id='name' placeholder="Town Name" />
-                                <input type="link" id='link' placeholder="Town Link" />
-                                <input type="text" id='address' placeholder="Town Address (Just town name)" />
+                                <input type="text" id='name' placeholder="Name" />
+                                <input type="link" id='link' placeholder="Link" />
+                                <input type="text" id='address' placeholder="Address" />
                                 <div>
                                     {mapMe.map((data, i) =>
-                                        <div className={styles.socialCont} key={i}  >
+                                        <div className={styles.socialCont} key={i}>
                                             <select id={data.type + "type"} className={styles.selectSocial}>
                                                 <option value="">Social Media</option>
                                                 <option value="twitter">Twitter</option>
@@ -111,7 +112,8 @@ export default function AddBusiness() {
                                 </div>
                             </div>
                             <div>
-                                <textarea id="bio" cols={23} placeholder="About" />
+                                <textarea id="history" cols={23} placeholder="History" />
+                                <textarea id="activities" cols={23} placeholder="Activities" />
                             </div>
                         </div>
                         <div className={styles.buttons}>
