@@ -1,0 +1,35 @@
+.title {
+    font-size: 60px;
+    color: #c7dde8;
+    padding-bottom: 3rem;
+    padding-left: 5rem;
+    padding-top: 3rem;
+}
+.container {
+    display: flex;
+    margin: 0 2rem;
+    flex-wrap: wrap;
+}
+.memberCard {
+    position: relative;
+    height: 300px;
+    width: 250px;
+    background-color: aliceblue;
+    margin: 10px;
+    padding: 10px;
+}
+.memberCard div {
+    display: flex;
+    flex-direction: column;
+}
+.memberTitle {
+    font-size: 32px;
+}
+.buttonContainer {
+    position: absolute;
+    bottom: 10px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

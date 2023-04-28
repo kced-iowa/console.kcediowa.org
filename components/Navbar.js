@@ -32,6 +32,10 @@ const buttons = [
     {
         title: "Play here",
         link: "recreation"
+    },
+    {
+        title: "Memberships",
+        link: 'memberships'
     }
 ];
 
