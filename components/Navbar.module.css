@@ -1,38 +1,144 @@
+/* DESKTOP NAV */
+
 .navbar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 50px;
-    background-color: #04c2e4;
-    padding-left: 10px;
-    font-size: 20px;
-}
-.navbar a {
-    text-decoration: none;
-    color: #000;
-}
-.account {
-    position: absolute;
-    right: 10px;
-    height: 50px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    right: 0;
+    z-index: 999;
+    background-color: #fff;
+    border: solid #c7dde8;
+    border-width: 0 0 3px 3px;
+    border-radius: 0 0 0 10px;
 }
-.account a {
+/* .navbar a,
+.navbar span {
+    color: #000;
+} */
+.navbar ul {
+    padding: 10px;
+    list-style: none;
+}
+.navbar ul li {
+    display: inline;
+}
+.navbar ul li a {
+    color: #000;
+}
+.mobileNav {
+    display: none;
+}
+
+/* MOBILE NAV */
+/* literally stole all of this from codepen, just made a few changes so thanks LMAO */
+.mobileNav {
+    position: absolute;
+    z-index: 99;
+}
+.toggler{
+    z-index: 999;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    top: 0;
+    right: 0;
     cursor: pointer;
-    text-transform: uppercase;
-    height: 100%;
+    opacity: 0;
+}
+.hamburger{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
-.account span {
-    text-transform: uppercase;
+.hamburger > div{
+    position: relative;
+    top: 0;
+    right: 0;
+    background: black;
+    height: 2px;
+    width: 60%;
+    transition: all  0.4s ease;
 }
-.space {
-    padding-right: 5px;
+.hamburger > div::before,
+.hamburger > div::after{
+    content: '';
+    position: absolute;
+    top: -10px;
+    background: black;
+    width: 100%;
+    height: 2px;
+    transition: all  0.4s ease;
 }
-.button {
-    padding: 0 10px;
+.hamburger > div::after{
+    top: 10px;
+}
+.toggler:checked + .hamburger > div{
+    background: rgba(0,0,0,0);
+    color: black;
+}
+.toggler:checked + .hamburger > div::before{
+    top: 0;
+    transform: rotate(45deg);
+    background: black;
+    z-index: 999;
+}
+.toggler:checked + .hamburger > div::after{
+    top: 0;
+    transform: rotate(135deg);
+    background: black;
+    z-index: 999;
+}
+.menu {
+    opacity: .9;
+    transition: all 0.4s ease;
+    position: fixed;
+}
+.toggler:checked ~ .menu{
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    z-index: -99;
+}
+.menu > div > ul{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 70px;
+    padding-right: 10px;
+    visibility: hidden;
+}
+.menu > div > ul > li{
+    list-style: none;
+    padding: 0.5rem;
+}
+.menu > div > ul > li > a {
+    color: #000;
     text-decoration: none;
+    font-size: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.toggler:checked ~ .menu > div > ul{
+    transition: visibility 0.4s ease;
+    transition-delay: 0.1s;
+    visibility: visible;
+}
+.toggler:checked ~ .menu > div > ul > li > a:hover{
+    color: orange;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
+    .mobileNav {
+        display: unset;
+    }
 }

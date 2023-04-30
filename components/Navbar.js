@@ -57,22 +57,51 @@ export default function Navbar(){
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
     return (
+        <>
         <div className={styles.navbar}>
-                {buttons.map(({title, link}) => (
-                    <Link href={'/' + link} key={title} >
-                        <a>
-                            <div className={styles.button}>
-                                <span>{title}</span>
-                            </div>
-                        </a>
-                    </Link>
-                ))}
-                <div className={styles.account}>
-                    <a onClick={logout}>
-                        <CgProfile className={styles.space} />
-                        <span>{user.username}</span>
+            {buttons.map(({title, link}) => (
+                <Link href={'/' + link} key={title} >
+                    <a>
+                        <div className={styles.button}>
+                            <span>{title}</span>
+                        </div>
                     </a>
+                </Link>
+            ))}
+            <div className={styles.account}>
+                <a onClick={logout}>
+                    <CgProfile className={styles.space} />
+                    <span>{user.username}</span>
+                </a>
+            </div>
+        </div>
+        <div className={styles.mobileNav}>
+            <input type="checkbox" className={styles.toggler} />
+            <div className={styles.hamburger}><div></div></div>
+            <div className={styles.menu}>
+                <div>
+                    <ul>
+                        {buttons.map(({title, link}) => (
+                            <li>
+                                <Link href={'/' + link} key={title} >
+                                    <a>
+                                        <div className={styles.button}>
+                                            <span>{title}</span>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+                        ))}
+                        <li>
+                        <a onClick={logout}>
+                            <CgProfile className={styles.space} />
+                            <span>{user.username}</span>
+                        </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
+        </>
     )
 }
