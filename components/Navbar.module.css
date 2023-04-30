@@ -1,31 +1,42 @@
 /* DESKTOP NAV */
 
 .navbar {
-    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: #04c2e4;
+    padding-left: 10px;
+    font-size: 20px;
+}
+.navbar a {
+    text-decoration: none;
+    color: #000;
+}
+.account {
+    position: absolute;
+    right: 10px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    right: 0;
-    z-index: 999;
-    background-color: #fff;
-    border: solid #c7dde8;
-    border-width: 0 0 3px 3px;
-    border-radius: 0 0 0 10px;
 }
-/* .navbar a,
-.navbar span {
-    color: #000;
-} */
-.navbar ul {
-    padding: 10px;
-    list-style: none;
+.account a {
+    cursor: pointer;
+    text-transform: uppercase;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
-.navbar ul li {
-    display: inline;
+.account span {
+    text-transform: uppercase;
 }
-.navbar ul li a {
-    color: #000;
+.space {
+    padding-right: 5px;
+}
+.button {
+    padding: 0 10px;
+    text-decoration: none;
 }
 .mobileNav {
     display: none;
