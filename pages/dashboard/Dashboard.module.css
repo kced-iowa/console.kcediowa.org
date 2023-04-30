@@ -1,5 +1,4 @@
 .container {
-    margin: 30px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -8,7 +7,6 @@
     background-color: #fff;
     padding: 10px;
     margin: 10px;
-    width: 400px;
     border-radius: 10px;
 }
 .homeCard {

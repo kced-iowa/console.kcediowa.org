@@ -80,7 +80,7 @@ export default function Dashboard() {
                                         source={api + '/cdn/backgrounds/' + image.file}
                                     />
                                 ))}
-                                {data[0] == undefined ?
+                                {/* {data[0] ?
                                     <div className={styles.imageUpload}>
                                         <input id="uploadImage" type="file" onChange={(e)=> {
                                             const formData = new FormData()
@@ -97,7 +97,7 @@ export default function Dashboard() {
                                             <span><BiUpload /></span>
                                         </label>
                                     </div>
-                                : null }
+                                : null } */}
                             </div>
                         </div>
                     </div>
