@@ -1,6 +1,7 @@
 .container {
     margin: 30px;
     display: flex;
+    flex-wrap: wrap;
 }
 .homeCard,
 .backgroundContainer {

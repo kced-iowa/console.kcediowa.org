@@ -27,7 +27,7 @@ export default function AddMember (props) {
     const submitHandler = (e) => {
         e.preventDefault()
             const formDatas = new FormData()
-            formDatas.append('name', name)
+            formDatas.append('name', e.target.name.value)
             formDatas.append('occupation', e.target.occupation.value)
             formDatas.append('bio', e.target.paragraph.value)
             formDatas.append('join', e.target.date.value)
