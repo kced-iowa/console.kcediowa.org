@@ -13,7 +13,7 @@ const mapMe = [
     {"type": "social3"}
 ]
 
-export default function AddBusiness() {
+export default function AddTownship() {
     
     const api = process.env.NEXT_PUBLIC_APIBASE
     

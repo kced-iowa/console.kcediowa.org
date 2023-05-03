@@ -32,6 +32,9 @@ export default function AddMember (props) {
             formDatas.append('bio', e.target.paragraph.value)
             formDatas.append('join', e.target.date.value)
             formDatas.append('image', img)
+            formDatas.append('email', e.target.email.value)
+            formDatas.append('phone', e.target.phone.value)
+            formDatas.append('website', e.target.website.value)
         axios
         .post(api + '/members', formDatas)
         .then(res => {
@@ -59,6 +62,9 @@ export default function AddMember (props) {
                             <input id="name" placeholder="Name" />
                             <input id="occupation" placeholder="Occupation" />
                             <input id="date" placeholder="Member Since" />
+                            <input id="email" placeholder="Email" />
+                            <input id="phone" placeholder="Phone" />
+                            <input id="website" placeholder="Website" />
                         </div>
                         <textarea id="paragraph" placeholder="Paragraph" />
                     </div>

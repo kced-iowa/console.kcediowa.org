@@ -14,15 +14,7 @@ export default function AddMember () {
     const api = process.env.NEXT_PUBLIC_APIBASE
 
     const [members, setMembers] = useState([])
-    
-    const [name, setName] = useState([])
-    const handleName = ({target:{value}}) => setName(value)
-    const [occupation, setOccupation] = useState('')
-    const handleOccupation = ({target:{value}}) => setOccupation(value)
-    const [paragraph, setParagraph] = useState('')
-        const handleParagraph = ({target:{value}}) => setParagraph(value)
-    const [date, setDate] = useState('')
-        const handleDate = ({target:{value}}) => setDate(value)
+    const [data, setData] = useState('')
 
     const router = useRouter()
     const { id }= router.query
@@ -43,12 +35,8 @@ export default function AddMember () {
             axios
             .get(api + '/members/' + id)
             .then((res) => {
-                setName(res.data.name)
-                setOccupation(res.data.occupation)
-                setParagraph(res.data.bio)
-                setDate(res.data.join)
+                setData(res.data)
                 setImg(res.data.image)
-                setImagePreview(api + '/cdn/members/' + res.data.image)
             })
             .catch((err) =>{
                 console.log(err)
@@ -73,18 +61,20 @@ export default function AddMember () {
     const submitHandle = (e) => {
         e.preventDefault();
         const formDatas = new FormData()
-            formDatas.append('name', name)
-            formDatas.append('occupation', occupation)
-            formDatas.append('bio', paragraph)
-            formDatas.append('join', date)
+            formDatas.append('name', e.target.name.value)
+            formDatas.append('occupation', e.target.occupation.value)
+            formDatas.append('bio', e.target.bio.value)
+            formDatas.append('join', e.target.join.value)
             formDatas.append('image', img)
+            formDatas.append('email', e.target.email.value)
+            formDatas.append('phone', e.target.phone.value)
+            formDatas.append('website', e.target.website.value)
         axios
         .patch(api + '/members/' + id, formDatas)
         .then(res => {
             if(res.status === 200) {
-                returnHandler()
+                cancelHandler()
             }
-            console.log(res)
         })
         .catch(err => console.log(err))
     }
@@ -130,11 +120,14 @@ export default function AddMember () {
                         </div>
                         <div className={styles.inputs}>
                             <div>
-                                <input value={name} placeholder="Name" onChange={handleName} />
-                                <input value={occupation} placeholder="Occupation" onChange={handleOccupation} />
-                                <input value={date} placeholder="Member Since" onChange={handleDate} />
+                                <input defaultValue={data.name} id='name' placeholder="Name" />
+                                <input defaultValue={data.occupation} id='occupation' placeholder="Occupation" />
+                                <input defaultValue={data.join} id='join' placeholder="Member Since" />
+                                <input defaultValue={data.email} id="email" placeholder="Email" />
+                                <input defaultValue={data.phone} id="phone" placeholder="Phone" />
+                                <input defaultValue={data.website} id="website" placeholder="Website" />
                             </div>
-                            <textarea value={paragraph} placeholder="Paragraph" onChange={handleParagraph} />
+                            <textarea defaultValue={data.bio} id='bio' placeholder="Paragraph" />
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>

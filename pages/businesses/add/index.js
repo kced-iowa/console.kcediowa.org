@@ -7,6 +7,12 @@ import Image from 'next/image'
 import axios from 'axios'
 import styles from './Add.module.css'
 
+const mapMe = [
+    {"type": "social1"},
+    {"type": "social2"},
+    {"type": "social3"}
+]
+
 export default function AddBusiness() {
     
     const api = process.env.NEXT_PUBLIC_APIBASE
@@ -106,8 +112,21 @@ export default function AddBusiness() {
                             <input type="tel" id='phone' placeholder="Phone Number" />
                             <input type="text" id='address' placeholder="Address" />
                             <input type="url" id='website' placeholder="Website" />
-                            <input type="text" id='facebook' placeholder="Facebook" />
                             <textarea id='bio' placeholder="About Business" />
+                            <div>
+                                {mapMe.map((data, i) =>
+                                    <div className={styles.socialCont} key={i}  >
+                                        <select id={data.type + "type"} className={styles.selectSocial}>
+                                            <option value="">Social Media</option>
+                                            <option value="twitter">Twitter</option>
+                                            <option value="instagram">Instagram</option>
+                                            <option value="facebook">Facebook</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <input id={data.type} />
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>
