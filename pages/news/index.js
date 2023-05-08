@@ -16,6 +16,7 @@ const fetcher = url => axios.get(url).then(res => res.data)
 const key = api + '/news'
 
 function NewsCard(props) {
+    const date = new Date(Date.parse(props.date))
     const [file, setFile] = useState(undefined)
     const onFileChange = (e) => {
         setFile(e.target.files[0])
@@ -46,7 +47,7 @@ function NewsCard(props) {
                 </div>
                 <input defaultValue={props.author}></input>
                 <input defaultValue={props.title}></input>
-                <input defaultValue={props.date}></input>
+                <input value={date.toLocaleString()}></input>
                 <textarea defaultValue={props.metadata}></textarea>
                 <div>
                     <span>{props.file}</span>
@@ -54,7 +55,7 @@ function NewsCard(props) {
                 </div>
             </form>
         </div>
-    )    
+    )
 }
 export default function News(){
     const {data, error} = useSWR(key, fetcher)
@@ -68,7 +69,6 @@ export default function News(){
         const formData = new FormData()
             formData.append('author', e.target.author.value)
             formData.append('title', e.target.title.value)
-            formData.append('date', e.target.date.value)
             formData.append('metadata', e.target.metadata.value)
             formData.append('file', file)
         axios
@@ -92,7 +92,8 @@ export default function News(){
                 <span onClick={()=>{alert("Tap on any element of the card to edit it!")}}>
                     <IoMdInformationCircleOutline />
                 </span>
-                <form onSubmit={(e)=> {
+                {/* idk what this does or why this is here, but i'm keeping it because it's cool(?) */}
+                {/* <form onSubmit={(e)=> {
                     e.preventDefault()
                     var str = e.target.hi.value
                     if (str.indexOf(' ') >= 0) {
@@ -102,8 +103,7 @@ export default function News(){
                     }
                     console.log(out)
                 }}>
-                    <input id="hi"></input>
-                </form>
+                </form> */}
             </div>
             <div className={styles.container}>
                 {add == true ?
@@ -123,7 +123,6 @@ export default function News(){
                             </div>
                             <input id="author" placeholder="Author"></input>
                             <input id="title" placeholder="Title"></input>
-                            <input id="date" placeholder="DD MM, YYYY"></input>
                             <textarea id="metadata" placeholder={`Metadata tags, separated with ','`}></textarea>
                             <div>
                                 <input type="file" onChange={onFileChange} />

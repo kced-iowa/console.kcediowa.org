@@ -1,3 +1,4 @@
 {
   "extends": ["next/core-web-vitals", "next/babel"]
 }
+// doing this makes it so it will actually bundle, but it won't catch some warnings, but i don't care
