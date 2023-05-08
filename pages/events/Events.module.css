@@ -34,7 +34,6 @@
     border-radius: 8px;
     padding: 10px;
 }
-.eventCard input,
 .eventCard textarea {
     resize: none;
 }
@@ -64,23 +63,14 @@
     overflow: hidden;
 }
 .dateContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding: 15px 0;
 }
-.dateContainer input {
+/* .dateContainer input {
     text-align: center;
-}
-.day {
+} */
+/* .timeContainer input{
     width: 60px;
-    font-size: 50px;
-    text-align: center;
-}
-.timeContainer input{
-    width: 60px;
-}
+} */
 .detailContainer {
     display: flex;
     flex-direction: column;

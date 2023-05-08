@@ -59,14 +59,16 @@ export default function Navbar(){
     return (
         <>
         <div className={styles.navbar}>
-            {buttons.map(({title, link}) => (
-                <Link href={'/' + link} key={title} >
+            {buttons.map(({title, link, i}) => (
+                <div key={i}>
+                <Link href={'/' + link}>
                     <a>
                         <div className={styles.button}>
                             <span>{title}</span>
                         </div>
                     </a>
                 </Link>
+                </div>
             ))}
             <div className={styles.account}>
                 <a onClick={logout}>
@@ -75,15 +77,15 @@ export default function Navbar(){
                 </a>
             </div>
         </div>
-        <div className={styles.mobileNav}>
+        {/* <div className={styles.mobileNav}>
             <input type="checkbox" className={styles.toggler} />
             <div className={styles.hamburger}><div></div></div>
             <div className={styles.menu}>
                 <div>
                     <ul>
-                        {buttons.map(({title, link}) => (
+                        {buttons.map(({title, link, i}) => (
                             <li>
-                                <Link href={'/' + link} key={title} >
+                                <Link href={'/' + link} key={i} >
                                     <a>
                                         <div className={styles.button}>
                                             <span>{title}</span>
@@ -101,7 +103,7 @@ export default function Navbar(){
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> */}
         </>
     )
 }

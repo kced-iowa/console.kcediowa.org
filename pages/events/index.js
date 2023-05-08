@@ -1,3 +1,5 @@
+"use client";
+
 // !! NEEDS CLEANING !!
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useMemo, useState, useEffect, useCallback } from 'react'
@@ -8,6 +10,9 @@ import axios from 'axios'
 import useSWR, {mutate} from 'swr'
 // this especially needs to be cleaned up
 import styles from './Events.module.css'
+
+import { Group } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
 
 import { AiFillDelete } from 'react-icons/ai'
 import { BiMessageSquareAdd } from 'react-icons/bi'
@@ -22,6 +27,8 @@ var key = api + '/events'
 
 function Event(props){
     const [changed, setChanged] = useState(false)
+    const [start, setStart] = useState(new Date(props.start))
+    const [end, setEnd] = useState(new Date(props.end))
     return (
         <div className={styles.eventCard}>
             <form onSubmit={
@@ -29,16 +36,14 @@ function Event(props){
                     e.preventDefault()
                     const editEvent = {
                         title: e.target.newTitle.value,
-                        dd: e.target.newDay.value,
-                        mm: e.target.newMonth.value,
-                        timestart: e.target.newTimestart.value,
-                        timeend: e.target.newTimeend.value,
+                        start: start,
+                        end: end,
                         desc: e.target.newAbout.value,
                         address: e.target.newAddress.value,
                         rsvp: e.target.newRsvp.value
                     }
                     axios
-                    .patch(api + '/events/' + props._id, editEvent)
+                    .patch(api + '/events/' + props.id, editEvent)
                     .then(res => {
                         if(res.status == 201) {
                             setChanged(false)
@@ -55,7 +60,7 @@ function Event(props){
                             const check = confirm('Do you want to delete this event?')
                             if (check == true) {
                                 axios
-                                .delete(api + '/events/' + props._id)
+                                .delete(api + '/events/' + props.deleteID)
                                 .then((res)=> {
                                     if (res.status == 200) {
                                         mutate(key)
@@ -69,13 +74,24 @@ function Event(props){
                     <textarea id="newTitle" defaultValue={props.title} onChange={()=>setChanged(true)}></textarea>
                 </div>
                 <div className={styles.dateContainer}>
-                    <input id="newDay" className={styles.day} type="text" maxLength={2} defaultValue={props.dd} onChange={()=>setChanged(true)}></input>
-                    <input id="newMonth" type="text" maxLength={4} defaultValue={props.mm} onChange={()=>setChanged(true)}></input>
-                    <div className={styles.timeContainer}>
-                        <input id="newTimestart" defaultValue={props.timestart} onChange={()=>setChanged(true)}></input>
-                        <span> - </span>
-                        <input id="newTimeend" defaultValue={props.timeend} onChange={()=>setChanged(true)}></input>
-                    </div>
+                    <span>{props.deleteID}</span>
+                    <span>From</span>
+                    <DateTimePicker
+                        value={start}
+                        placeholder="Start Date"
+                        maw={400}
+                        mx="auto"
+                        onChange={(value)=>{setStart(value); setChanged(true)}}
+                    />
+                    <span onClick={()=>console.log(date)}>To</span>
+                    {/* <input id="newTimeend" placeholder={"0:00PM"}></input> */}
+                    <DateTimePicker
+                        value={end}
+                        placeholder="End Date"
+                        maw={400}
+                        mx="auto"
+                        onChange={(value)=>{setEnd(value); setChanged(true)}}
+                    />
                 </div>
                 <div className={styles.detailContainer}>
                     <textarea id="newAbout" defaultValue={props.desc} onChange={()=>setChanged(true)}></textarea>
@@ -98,17 +114,19 @@ function Event(props){
 
 export default function Events(){
 
+    const [start, setStart] = useState('')
+    const [end, setEnd] = useState('')
+
     const {data, error} = useSWR(key, fetcher)
+    // const temp = Array.prototype.reverse(data)
 
     const [addHandler, setAddHandler] = useState(false)
     const newCardAdded = (e) => {
         e.preventDefault()
         const newEvent = {
             title: e.target.newTitle.value,
-            dd: e.target.newDay.value,
-            mm: e.target.newMonth.value,
-            timestart: e.target.newTimestart.value,
-            timeend: e.target.newTimeend.value,
+            start: start,
+            end: end,
             desc: e.target.newAbout.value,
             address: e.target.newAddress.value,
             rsvp: e.target.newRsvp.value
@@ -149,6 +167,8 @@ export default function Events(){
                                         const check = confirm("Are you sure you want to cancel?")
                                         if (check == true) {
                                             setAddHandler(false)
+                                            setStart('')
+                                            setEnd('')
                                         }
                                     }
                                 }>X</button>
@@ -157,12 +177,23 @@ export default function Events(){
                                 <textarea id="newTitle" placeholder={"Event title"}></textarea>
                             </div>
                             <div className={styles.dateContainer}>
-                                <input id="newDay" className={styles.day} type="text" maxLength={2} placeholder={"00"}></input>
-                                <input id="newMonth" type="text" maxLength={4} placeholder={"MONTH"}></input>
                                 <div className={styles.timeContainer}>
-                                    <input id="newTimestart" placeholder={"0:00AM"}></input>
-                                    <span> - </span>
-                                    <input id="newTimeend" placeholder={"0:00PM"}></input>
+                                    {/* <input id="newTimestart" placeholder={"0:00AM"}></input> */}
+                                    <span>From</span>
+                                    <DateTimePicker
+                                        placeholder="Start Date"
+                                        maw={400}
+                                        mx="auto"
+                                        onChange={setStart}
+                                    />
+                                    <span>To</span>
+                                    {/* <input id="newTimeend" placeholder={"0:00PM"}></input> */}
+                                    <DateTimePicker
+                                        placeholder="End Date"
+                                        maw={400}
+                                        mx="auto"
+                                        onChange={setEnd}
+                                    />
                                 </div>
                             </div>
                             <div className={styles.detailContainer}>
@@ -179,14 +210,13 @@ export default function Events(){
                             </form>
                         </div>
                     : null }
-                    {data && data.map((event)=> (
+                    {data && data.map((event, i)=> (
                         <Event
-                            _id={event._id}
+                            key={event._id}
+                            id={event._id}
                             title={event.title}
-                            dd={event.dd}
-                            mm={event.mm}
-                            timestart={event.timestart}
-                            timeend={event.timeend}
+                            start={event.start}
+                            end={event.end}
                             desc={event.desc}
                             address={event.address}
                             rsvp={event.rsvp}
