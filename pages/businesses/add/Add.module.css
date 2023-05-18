@@ -48,23 +48,41 @@
     margin-right: 50px;
 }
 .inputs {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 400px);
 }
 .inputs input,
 .inputs textarea {
-
-    all: unset;
     height: 20px;
-    width: 400px;
+    width: 350px;
     padding: 10px;
     border-radius: 10px;
     margin: 10px 10px 10px 0;
     border: solid 1px #000;
 }
 .inputs textarea {
+    display: block;
     resize: none;
-    height: 100px;
+    height: 200px;
+}
+.socialCont {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    width: 370px;
+    margin: 10px 0;
+}
+.socialCont select {
+    border: 1px solid #000;
+    padding: 10px;
+    width: 125px;
+    border-radius: 10px;
+    margin-right: 10px;
+    background-color: transparent;
+}
+.socialCont input {
+    margin: 0;
+    width: 300px;
 }
 .buttons {
     position: absolute;
@@ -76,6 +94,10 @@
 }
 .contact {
     width: 500px;
+}
+.contact .inputs {
+    display: flex;
+    flex-direction: column;
 }
 .contactTitle div {
     display: flex;

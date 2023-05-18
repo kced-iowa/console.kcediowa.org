@@ -32,14 +32,14 @@ export default function EditBusiness() {
             axios
             .get(api + '/business/' + id)
             .then((res) => {
+                setData(res.data)
+                setContact(res.data.contact)
                 setImagePreview(api + '/cdn/business/' + res.data.coverimg)
                 setImage(res.data.coverimg)
                 setImagePreview2(api + '/cdn/business/' + res.data.mainimg)
                 setImage2(res.data.mainimg)
                 setContactsPreview(api + '/cdn/business/' + res.data.contactimg)
                 setContactsImage(res.data.contactimg)
-                setData(res.data)
-                setContact(res.data.contact)
             })
         }
         if(router.isReady){
@@ -74,6 +74,12 @@ export default function EditBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        // i will rename this later but i don't really care
+        const balls = [
+            {type: e.target.type0.value, user: e.target.user0.value},
+            {type: e.target.type1.value, user: e.target.user1.value},
+            {type: e.target.type2.value, user: e.target.user2.value}
+        ]
         const formData = new FormData()
             formData.append('coverimg', image)
             formData.append('mainimg', image2)
@@ -85,7 +91,7 @@ export default function EditBusiness() {
             formData.append('address', e.target.address.value)
             formData.append('bio', e.target.bio.value)
             formData.append('website', e.target.website.value)
-            formData.append('facebook', e.target.facebook.value)
+            formData.append('socials', JSON.stringify(balls))
             const contactObj = {
                 name: e.target.contactName.value,
                 position: e.target.contactPosition.value,
@@ -130,13 +136,30 @@ export default function EditBusiness() {
                                 </div>
                         </div>
                         <div className={styles.inputs}>
-                            <input type="text" id='name' defaultValue={data.name} placeholder="Name" />
-                            <input type="text" id='type' defaultValue={data.type} placeholder="Business Type" />
-                            <input type="tel" id='phone' defaultValue={data.phone} placeholder="Phone Number" />
-                            <input type="text" id='address' defaultValue={data.address} placeholder="Address" />
-                            <input type="url" id='website' defaultValue={data.website} placeholder="Website" />
-                            <input type="text" id='facebook' defaultValue={data.facebook} placeholder="Facebook" />
-                            <textarea type="text" id='bio' defaultValue={data.bio} placeholder="About Business" />
+                            <div>
+                                <input type="text" id='name' defaultValue={data.name} placeholder="Name" />
+                                <input type="text" id='type' defaultValue={data.type} placeholder="Business Type" />
+                                <input type="tel" id='phone' defaultValue={data.phone} placeholder="Phone Number" />
+                                <input type="text" id='address' defaultValue={data.address} placeholder="Address" />
+                                <input type="url" id='website' defaultValue={data.website} placeholder="Website" />
+                            </div>
+                            <div>
+                                <div>
+                                        {data.socials.map((data, i) =>
+                                            <div className={styles.socialCont} key={i}>
+                                                <select id={"type" + i} defaultValue={data.type} className={styles.selectSocial}>
+                                                    <option value="">Social Media</option>
+                                                    <option value="twitter">Twitter</option>
+                                                    <option value="instagram">Instagram</option>
+                                                    <option value="facebook">Facebook</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                <input id={"user" + i} defaultValue={data.user} />
+                                            </div>
+                                        )}
+                                </div>
+                                <textarea type="text" id='bio' defaultValue={data.bio} placeholder="About Business" />
+                            </div>
                         </div>
                         <div className={styles.buttons}>
                             <button type="submit">Add</button>

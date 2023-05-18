@@ -59,6 +59,7 @@ export default function EditBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        // i will rename this later but i don't really care
         const balls = [
             {type: e.target.type0.value, user: e.target.user0.value},
             {type: e.target.type1.value, user: e.target.user1.value},
@@ -72,7 +73,6 @@ export default function EditBusiness() {
         formDatas.append('about', e.target.bio.value)
         formDatas.append('mapsAddress', e.target.address.value)
         formDatas.append('socials', JSON.stringify(balls))
-        console.log(formDatas)
         axios
         .patch(api + '/townships/' + id, formDatas)
         .then(res => {

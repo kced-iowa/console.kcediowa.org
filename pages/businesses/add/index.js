@@ -47,6 +47,11 @@ export default function AddBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault();
+            const balls = [
+                {type: e.target.social1type.value, user: e.target.social1.value},
+                {type: e.target.social2type.value, user: e.target.social2.value},
+                {type: e.target.social3type.value, user: e.target.social3.value}
+            ]
             const formDatas = new FormData();
             formDatas.append('coverimg', image)
             formDatas.append('mainimg', image2)
@@ -58,7 +63,7 @@ export default function AddBusiness() {
             formDatas.append('address', e.target.address.value)
             formDatas.append('bio', e.target.bio.value)
             formDatas.append('website', e.target.website.value)
-            formDatas.append('facebook', e.target.facebook.value)
+            formDatas.append('socials', JSON.stringify(balls))
             const contactObj = {
                 name: e.target.contactName.value,
                 position: e.target.contactPosition.value,
@@ -107,25 +112,29 @@ export default function AddBusiness() {
                                 </div>
                         </div>
                         <div className={styles.inputs}>
-                            <input type="text" id='name' placeholder="Name" />
-                            <input type="text" id='type' placeholder="Business Type" />
-                            <input type="tel" id='phone' placeholder="Phone Number" />
-                            <input type="text" id='address' placeholder="Address" />
-                            <input type="url" id='website' placeholder="Website" />
-                            <textarea id='bio' placeholder="About Business" />
                             <div>
-                                {mapMe.map((data, i) =>
-                                    <div className={styles.socialCont} key={i}  >
-                                        <select id={data.type + "type"} className={styles.selectSocial}>
-                                            <option value="">Social Media</option>
-                                            <option value="twitter">Twitter</option>
-                                            <option value="instagram">Instagram</option>
-                                            <option value="facebook">Facebook</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                        <input id={data.type} />
-                                    </div>
-                                )}
+                                <input type="text" id='name' placeholder="Name" />
+                                <input type="text" id='type' placeholder="Business Type" />
+                                <input type="tel" id='phone' placeholder="Phone Number" />
+                                <input type="text" id='address' placeholder="Address" />
+                                <input type="url" id='website' placeholder="Website" />
+                            </div>
+                            <div>
+                                <div>
+                                    {mapMe.map((data, i) =>
+                                        <div className={styles.socialCont} key={i}  >
+                                            <select id={data.type + "type"} className={styles.selectSocial}>
+                                                <option value="">Social Media</option>
+                                                <option value="twitter">Twitter</option>
+                                                <option value="instagram">Instagram</option>
+                                                <option value="facebook">Facebook</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <input id={data.type} />
+                                        </div>
+                                    )}
+                                </div>
+                                <textarea id='bio' placeholder="About Business" />
                             </div>
                         </div>
                         <div className={styles.buttons}>
