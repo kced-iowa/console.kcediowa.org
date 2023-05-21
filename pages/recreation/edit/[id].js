@@ -59,7 +59,7 @@ export default function EditBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        const balls = [
+        const socialConstruct = [
             {type: e.target.type0.value, user: e.target.user0.value},
             {type: e.target.type1.value, user: e.target.user1.value},
             {type: e.target.type2.value, user: e.target.user2.value}
@@ -72,7 +72,7 @@ export default function EditBusiness() {
         formDatas.append('history', e.target.history.value)
         formDatas.append('activities', e.target.activities.value)
         formDatas.append('mapsAddress', e.target.address.value)
-        formDatas.append('socials', JSON.stringify(balls))
+        formDatas.append('socials', JSON.stringify(socialConstruct))
         console.log(formDatas)
         axios
         .patch(api + '/recreation/' + id, formDatas)

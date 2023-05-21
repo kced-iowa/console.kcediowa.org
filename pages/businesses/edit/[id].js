@@ -75,7 +75,7 @@ export default function EditBusiness() {
     const submitHandler = (e) => {
         e.preventDefault()
         // i will rename this later but i don't really care
-        const balls = [
+        const socialConstruct = [
             {type: e.target.type0.value, user: e.target.user0.value},
             {type: e.target.type1.value, user: e.target.user1.value},
             {type: e.target.type2.value, user: e.target.user2.value}
@@ -91,7 +91,7 @@ export default function EditBusiness() {
             formData.append('address', e.target.address.value)
             formData.append('bio', e.target.bio.value)
             formData.append('website', e.target.website.value)
-            formData.append('socials', JSON.stringify(balls))
+            formData.append('socials', JSON.stringify(socialConstruct))
             const contactObj = {
                 name: e.target.contactName.value,
                 position: e.target.contactPosition.value,
@@ -145,16 +145,16 @@ export default function EditBusiness() {
                             </div>
                             <div>
                                 <div>
-                                        {data.socials.map((data, i) =>
+                                        {data.socials?.map((data, i) =>
                                             <div className={styles.socialCont} key={i}>
-                                                <select id={"type" + i} defaultValue={data.type} className={styles.selectSocial}>
+                                                <select id={"type" + i} defaultValue={data?.type || ""} className={styles.selectSocial}>
                                                     <option value="">Social Media</option>
                                                     <option value="twitter">Twitter</option>
                                                     <option value="instagram">Instagram</option>
                                                     <option value="facebook">Facebook</option>
                                                     <option value="Other">Other</option>
                                                 </select>
-                                                <input id={"user" + i} defaultValue={data.user} />
+                                                <input id={"user" + i} defaultValue={data?.user} />
                                             </div>
                                         )}
                                 </div>

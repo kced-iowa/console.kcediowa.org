@@ -39,7 +39,7 @@ export default function AddBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        const balls = [
+        const socialConstruct = [
             {type: e.target.social1type.value, user: e.target.social1.value},
             {type: e.target.social2type.value, user: e.target.social2.value},
             {type: e.target.social3type.value, user: e.target.social3.value}
@@ -52,7 +52,7 @@ export default function AddBusiness() {
             formDatas.append('history', e.target.history.value)
             formDatas.append('activities', e.target.activities.value)
             formDatas.append('mapsAddress', e.target.address.value)
-            formDatas.append('socials', JSON.stringify(balls))
+            formDatas.append('socials', JSON.stringify(socialConstruct))
         axios
         .post(api + '/recreation', formDatas)
         .then(res => {

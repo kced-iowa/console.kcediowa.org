@@ -47,7 +47,7 @@ export default function AddBusiness() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-            const balls = [
+            const socialConstruct = [
                 {type: e.target.social1type.value, user: e.target.social1.value},
                 {type: e.target.social2type.value, user: e.target.social2.value},
                 {type: e.target.social3type.value, user: e.target.social3.value}
@@ -63,7 +63,7 @@ export default function AddBusiness() {
             formDatas.append('address', e.target.address.value)
             formDatas.append('bio', e.target.bio.value)
             formDatas.append('website', e.target.website.value)
-            formDatas.append('socials', JSON.stringify(balls))
+            formDatas.append('socials', JSON.stringify(socialConstruct))
             const contactObj = {
                 name: e.target.contactName.value,
                 position: e.target.contactPosition.value,

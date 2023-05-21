@@ -43,7 +43,7 @@
     cursor: pointer;
 }
 .addMember {
-    cursor: absolute;
+    cursor: pointer;
     position: sticky;
     bottom: 10px;
     right: 10px;
