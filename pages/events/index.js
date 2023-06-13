@@ -11,6 +11,7 @@ import useSWR, {mutate} from 'swr'
 // this especially needs to be cleaned up
 import styles from './Events.module.css'
 
+// i don't even remember importing this, remove later ??
 import { Group } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 
@@ -40,11 +41,13 @@ function Event(props){
                         end: end,
                         desc: e.target.newAbout.value,
                         address: e.target.newAddress.value,
-                        rsvp: e.target.newRsvp.value
+                        rsvp: e.target.newRsvp.value,
+                        link: e.target.newLink.value
                     }
                     axios
                     .patch(api + '/events/' + props.id, editEvent)
                     .then(res => {
+                        console.log(res)
                         if(res.status == 201) {
                             setChanged(false)
                             mutate(key)
@@ -60,7 +63,7 @@ function Event(props){
                             const check = confirm('Do you want to delete this event?')
                             if (check == true) {
                                 axios
-                                .delete(api + '/events/' + props.deleteID)
+                                .delete(api + '/events/' + props.id)
                                 .then((res)=> {
                                     if (res.status == 200) {
                                         mutate(key)
@@ -99,6 +102,7 @@ function Event(props){
                         <span><FaMapMarkerAlt /></span>
                         <input id="newAddress" defaultValue={props.address} onChange={()=>setChanged(true)}></input>
                     </div>
+                    <input id="newLink" defaultValue={props.link} onChange={()=>setChanged(true)}></input>
                 </div>
                 <div className={styles.forms}>
                     <a rel="noreferrer" target="_blank" href={props.rsvp}>
@@ -129,7 +133,8 @@ export default function Events(){
             end: end,
             desc: e.target.newAbout.value,
             address: e.target.newAddress.value,
-            rsvp: e.target.newRsvp.value
+            rsvp: e.target.newRsvp.value,
+            link: e.target.newLink.value
         }
         axios
         .post(api + '/events', newEvent)
@@ -202,6 +207,7 @@ export default function Events(){
                                     <span><FaMapMarkerAlt /></span>
                                     <input id="newAddress" placeholder={"Event location"}></input>
                                 </div>
+                                <input id="newLink" type="url" placeholder={"Additional link"}></input>
                             </div>
                             <div className={styles.forms}>
                                 <input id="newRsvp" type="url" placeholder={"RSVP / form link"}></input>
@@ -220,6 +226,7 @@ export default function Events(){
                             desc={event.desc}
                             address={event.address}
                             rsvp={event.rsvp}
+                            link={event.link}
                         />
                     ))}
                 </div>
