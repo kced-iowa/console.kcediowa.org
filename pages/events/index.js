@@ -47,7 +47,6 @@ function Event(props){
                     axios
                     .patch(api + '/events/' + props.id, editEvent)
                     .then(res => {
-                        console.log(res)
                         if(res.status == 201) {
                             setChanged(false)
                             mutate(key)

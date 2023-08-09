@@ -10,6 +10,10 @@ const buttons = [
         link: "dashboard"
     },
     {
+        title: "About",
+        link: "about"
+    },
+    {
         title: "Members",
         link: "members"
     },
