@@ -90,6 +90,8 @@ export default function About() {
         <span>
           About
         </span>
+        <br />
+        <span>This page supports Markdown. <a target='_blank' href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Learn more.</a></span>
       </div>
       <div className={styles.container}>
       {addHandler == true ? 

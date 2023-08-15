@@ -10,15 +10,11 @@
     padding-left: 5rem;
     padding-top: 3rem;
 }
-.title,
-.title span {
-    display: flex;
-    align-items: center;
-}
-.title span:nth-child(2) {
-    cursor: pointer;
-    font-size: 45px;
-    margin-left: 30px;
+.title a,
+.title span:nth-child(3) {
+    color: #ffff;
+    font-size: 20px;
+    /* margin-left: 30px; */
 }
 .container {
     display: flex;
