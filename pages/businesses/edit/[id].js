@@ -7,6 +7,8 @@ import axios from "axios";
 import styles from './Edit.module.css'
 
 
+const msg = 'Keywords are used to help people find your business. Please use a comma to separate each keyword. store,antiques,antique store,hamburger'
+
 export default function EditBusiness() {
     
     const api = process.env.NEXT_PUBLIC_APIBASE
@@ -100,6 +102,9 @@ export default function EditBusiness() {
                 website: e.target.contactWebsite.value
             }
             formData.append("contact", JSON.stringify(contactObj))
+            const keywords = e.target.keywords.value.split(',')
+            const keywordsArr = JSON.stringify(keywords.map((data) => data.trim()))
+            formData.append('keywords', keywordsArr)
         axios
         .patch(api + '/business/' + id, formData)
         .then(res => {
@@ -142,6 +147,10 @@ export default function EditBusiness() {
                                 <input type="tel" id='phone' defaultValue={data.phone} placeholder="Phone Number" />
                                 <input type="text" id='address' defaultValue={data.address} placeholder="Address" />
                                 <input type="url" id='website' defaultValue={data.website} placeholder="Website" />
+                                <div>
+                                    <input type="text" id='keywords' placeholder="Keywords" defaultValue={data.keywords.join(", ")} />
+                                    <span onClick={()=>alert(msg)}>!</span>
+                                </div>
                             </div>
                             <div>
                                 <div>

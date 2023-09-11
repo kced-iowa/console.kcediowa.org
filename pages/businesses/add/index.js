@@ -13,6 +13,8 @@ const mapMe = [
     {"type": "social3"}
 ]
 
+const msg = 'Keywords are used to help people find your business. Please use a comma to separate each keyword. store,antiques,antique store,hamburger'
+
 export default function AddBusiness() {
     
     const api = process.env.NEXT_PUBLIC_APIBASE
@@ -71,7 +73,10 @@ export default function AddBusiness() {
                 email: e.target.contactEmail.value,
                 website: e.target.contactWebsite.value
             }
-            formDatas.append("contact", JSON.stringify(contactObj))
+            formDatas.append("contact", JSON.stringify(contactObj)) 
+            const keywords = e.target.keywords.value.split(',')
+            const keywordsArr = JSON.stringify(keywords.map((data) => data.trim()))
+            formDatas.append('keywords', keywordsArr)
         axios
         .post(api + '/business', formDatas)
         .then(res => {
@@ -82,6 +87,7 @@ export default function AddBusiness() {
         })
         .catch(err => console.log(err))
     }
+       
     const returnHandler = () => {
         const url = '/businesses'
         window.location = url
@@ -118,6 +124,10 @@ export default function AddBusiness() {
                                 <input type="tel" id='phone' placeholder="Phone Number" />
                                 <input type="text" id='address' placeholder="Address" />
                                 <input type="url" id='website' placeholder="Website" />
+                                <div>
+                                    <input type="text" id='keywords' placeholder="Keywords" />
+                                    <span onClick={()=>alert(msg)}>!</span>
+                                </div>
                             </div>
                             <div>
                                 <div>
